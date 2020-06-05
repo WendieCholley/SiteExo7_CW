@@ -42,6 +42,10 @@
       cursor: pointer;
     }
 
+    #ajout:hover {
+      color: blue;
+    }
+
   </style>
 
 </head>
@@ -114,9 +118,9 @@ Name : Zenlike  Released for free under a Creative Commons Attribution 2.5 Licen
             <div v-if="tabExos.length != 0"> <i class="material-icons" @click="changeSelection(); affichage()"> {{ selection }} </i> {{ texteSelection }} </div>
         </ul>
         <ul class="collection with-header" style="height: 600px; overflow: scroll; overflow: auto">
-          <li class="collection-item" v-for="item in tabExos" v-if="item.exercice != ''"
-          @click="item.visible = changeIcone(item.visible); affichage(); verifSelection()">
-          <i class="material-icons">{{ item.visible }}</i> {{ item.exercice }} </li>
+          <li class="collection-item" v-for="item in tabExos" v-if="item.exercice != ''">
+          <i class="material-icons" @click="item.visible = changeIcone(item.visible); affichage(); verifSelection()">{{ item.visible }}</i> {{ item.exercice }} 
+          <i id="ajout" class="material-icons" @click="completeListePerso(item.exercice)"> add </i></li>
         </ul>
       </div>
 
@@ -125,6 +129,9 @@ Name : Zenlike  Released for free under a Creative Commons Attribution 2.5 Licen
         <ul class="collection with-header">
           <li class="collection-header"> <h5>Affichage des exercices</h5> </li>
         </ul>
+        <p>Ma liste : <button @click="affichagePerso()">Valider</button></p> 
+        <textarea id="exercices" rows="2" v-model="listePerso"> {{ listePerso }}</textarea>
+        
         <ul class="collection with-header" style="height: 600px; width: 100%; overflow: scroll; overflow: auto">
           <li class="collection-item" v-for="item in afficheEx" style="display: flex; height: 100%">
             <iframe :src = "item" scrolling="no" frameborder="0" style="height: 100%; width: 100%"></iframe>
@@ -188,6 +195,9 @@ Name : Zenlike  Released for free under a Creative Commons Attribution 2.5 Licen
       //Pour cocher ou decohcer tous les exercices
       selection: 'check_box',
       texteSelection: 'Tout désélectionner',
+      //Liste des exercices entrés par l'utilisateur
+      listePerso: '',
+      tabExoPerso: [],
     },
     methods: {
       //Méthode qui regroupe les listes d'exercices de tous les sous-chapitres d'un chapitre sélectionné, le paramètre étant la liste des sous-chapitres
@@ -223,6 +233,7 @@ Name : Zenlike  Released for free under a Creative Commons Attribution 2.5 Licen
         var objExos = new Object();
         objExos.exercice = tabInter[n];
         objExos.visible = this.icone;
+        objExos.ajouter = 'add';
         this.tabExos.push(objExos);
         this.nbExos += 1;
       }
@@ -235,7 +246,7 @@ Name : Zenlike  Released for free under a Creative Commons Attribution 2.5 Licen
         return 'visibility';
       }
     },
-
+    //Méthode qui change l'icone "tout sélectionner" ainsi que le texte correspondant
     changeSelection(){
       if(this.selection == 'check_box_outline_blank'){
         this.selection = 'check_box';
@@ -291,6 +302,34 @@ Name : Zenlike  Released for free under a Creative Commons Attribution 2.5 Licen
             this.afficheEx.push(chemin + 'ex' + numExo + '.txt');
           }
         }
+      }
+    },
+    affichagePerso(){
+      this.afficheEx = [];
+      var chemin = 'exercices/'
+      var numExo;
+      this.tabExoPerso = this.listePerso.split(' ');
+      for(var n in this.tabExoPerso) {
+        if(this.tabExoPerso[n] != ''){
+          numExo = this.tabExoPerso[n];
+          while(numExo.length < 6) {
+            numExo = 0 + numExo;
+          }
+          this.afficheEx.push(chemin + 'ex' + numExo + '.txt');
+        }
+        
+      }
+    },
+    completeListePerso(numEx){
+      var tabInter = this.listePerso.split(' ');
+      var c = 0;
+      for(var n in tabInter){
+        if(tabInter[n] != numEx){
+          c++;
+        }
+      }
+      if(c == tabInter.length){
+        this.listePerso += numEx + ' ';
       }
     }
   },
