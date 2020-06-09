@@ -53,6 +53,36 @@ Name : Zenlike  Released for free under a Creative Commons Attribution 2.5 Licen
 -->
 
 <body onLoad="M.AutoInit();">
+  <div id="header" class="row grey darken-4 white-text">
+            <div class="col l10"><h4>Cours et exercices<br> de mathématiques</h4></div>
+            
+                     <a href="index2.html"> 
+             <img src="LogoExo7-mini.png"  alt="Exo7"/>
+                     </a>
+    </div>
+
+<!--    <div id="headerpic"></div>
+-->
+    <nav>
+        <div class="nav-wrapper center">
+            <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+            <ul class="right hide-on-med-and-down">
+                <li><a href="un.html" >Première année</a></li>
+                <li><a href="deux.html">Deuxième année</a></li>
+                <li><a href="trois.html">Troisième année</a></li>
+                <li><a href="prof.html">Pour les profs</a></li>
+                <li><a href="search.php">Rechercher</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <ul class="sidenav" id="mobile-demo">
+    <li><a href="un.html">Première année</a></li>
+    <li><a href="deux.html">Deuxième année</a></li>
+    <li><a href="trois.html">Troisième année</a></li>
+    <li><a href="prof.html">Pour les profs</a></li>
+    <li><a href="search.php">Rechercher</a></li>
+  </ul>
 
   <div class="row"> 
     <div class="app">
@@ -63,7 +93,7 @@ Name : Zenlike  Released for free under a Creative Commons Attribution 2.5 Licen
 
         <!-- Affichage des modules -->
         <ul class="collection with-header" v-if = showModule>
-          <li class="collection-header" v-show = showModule > <h5>Modules</h5> </li>
+           <li class="collection-header" v-show = showModule > <h5>Modules</h5> </li>
         </ul>
         <ul class="collection with-header" v-if = showModule>
           <li class="collection-item" 
@@ -108,7 +138,7 @@ Name : Zenlike  Released for free under a Creative Commons Attribution 2.5 Licen
       <!-- Liste des exercices -->
       <div class="col s3 l2">
         <ul class="collection with-header">
-          <li class="collection-header"> <h5>Liste des exercices 
+          <li class="collection-header" draggable="true" ondragstart="event.dataTransfer.setData('text/plain', 'Ce texte peut être glissé')"> <h5>Liste des exercices 
             <h6 v-if="chapitre || sousChap != ''">
               ({{ chapitre.substring(4,100) }} - {{ sousChap.substring(7, 100) }})
             </h6></h5> 
@@ -126,8 +156,8 @@ Name : Zenlike  Released for free under a Creative Commons Attribution 2.5 Licen
         <ul class="collection with-header">
           <li class="collection-header"> <h5>Affichage des exercices</h5> </li>
         </ul>
-        <p>Ma liste : <button @click="affichagePerso()">Valider</button></p> 
-        <textarea id="exercices" rows="2" v-model="listePerso"> {{ listePerso }}</textarea>
+        <a class="btn-floating" @click="affichagePerso()"><i class="material-icons">check</i></a> Ma liste :
+        <textarea class="materialize-textarea" id="exercices" rows="2" v-model="listePerso"> {{ listePerso }}</textarea>
         
         <ul class="collection with-header" style="height: 600px; width: 100%; overflow: scroll; overflow: auto">
           <li class="collection-item" v-for="item in afficheEx" style="display: flex; height: 100%">
@@ -137,13 +167,13 @@ Name : Zenlike  Released for free under a Creative Commons Attribution 2.5 Licen
       </div>
 
       <div class="fixed-action-btn">
-        <a class="btn-floating btn-large red">
+        <a class="btn-floating btn-large">
           <i class="large material-icons">menu</i>
         </a>
         <ul>
-          <li><a class="btn-floating yellow"><i class="material-icons">file_download</i></a></li>
-          <li><a class="btn-floating orange"><i class="material-icons">print</i></a></li>
-          <li><a class="btn-floating red"><i class="material-icons">edit</i></a></li>
+          <li><span class="tooltipped" data-position="top" data-tooltip="Télécharger"><a class="btn-floating"><i class="material-icons">file_download</i></span></a></li>
+          <li><span class="tooltipped" data-position="top" data-tooltip="Imprimer"><a class="btn-floating"><i class="material-icons">print</i></span></a></li>
+          <li><span class="tooltipped" data-position="top" data-tooltip="Modifier"><a class="btn-floating"><i class="material-icons">edit</i></span></a></li>
         </ul>
       </div>
 
