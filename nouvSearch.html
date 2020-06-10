@@ -53,43 +53,40 @@ Name : Zenlike  Released for free under a Creative Commons Attribution 2.5 Licen
 -->
 
 <body onLoad="M.AutoInit();">
-  <div id="header" class="row grey darken-4 white-text">
-            <div class="col l10"><h4>Cours et exercices<br> de mathématiques</h4></div>
-            
-                     <a href="index2.html"> 
-             <img src="LogoExo7-mini.png"  alt="Exo7"/>
-                     </a>
+
+	<div id="header" class="row grey darken-4 white-text" style="margin: 0">
+		<div class="col l10"><h4>Cours et exercices<br> de mathématiques</h4></div>
+            <a href="index2.html"> 
+        	    <img src="images/LogoExo7-mini.png"  alt="Exo7"/>
+            </a>
+	</div>
+  	<nav class="nav-extended deep-orange darken-3"style="margin-bottom: 15px">
+    	<div class="nav-wrapper">
+      		<a class="brand-logo">Rechercher</a>
+    	</div>
+
+    <div class="nav-content" >
+      <ul class="tabs tabs-transparent">
+        <li class="tab"><a href="index2.html">Accueil</a></li>
+        <li class="tab"><a href="un.html">Première année</a></li>
+        <li class="tab"><a href="deux.html">Deuxième année</a></li>
+        <li class="tab"><a href="trois.html">Troisième année</a></li>
+        <li class="tab"><a href="prof.html">Pour les profs</a></li>
+        <li class="tab orange darken-1"><a class="active" href="nouvSearch.html">Rechercher</a></li>
+      </ul>
     </div>
-
-<!--    <div id="headerpic"></div>
--->
-    <nav>
-        <div class="nav-wrapper center">
-            <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-            <ul class="right hide-on-med-and-down">
-                <li><a href="un.html" >Première année</a></li>
-                <li><a href="deux.html">Deuxième année</a></li>
-                <li><a href="trois.html">Troisième année</a></li>
-                <li><a href="prof.html">Pour les profs</a></li>
-                <li><a href="search.php">Rechercher</a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <ul class="sidenav" id="mobile-demo">
-    <li><a href="un.html">Première année</a></li>
-    <li><a href="deux.html">Deuxième année</a></li>
-    <li><a href="trois.html">Troisième année</a></li>
-    <li><a href="prof.html">Pour les profs</a></li>
-    <li><a href="search.php">Rechercher</a></li>
-  </ul>
+  </nav>
 
   <div class="row"> 
     <div class="app">
-        <h2>Rechercher des exercices</h2>
+    	<!-- Pour changer couleur bleue de ligne du dessous, chnager le CSS de materialize lignes 6228,6229,6230 et 6246 -->
+		<a class="btn-floating yellow accent-4 waves-effect waves-light" @click="affichagePerso()"><i class="material-icons">check</i></a> Ma liste (ajoutez depuis la liste des exercices ou entrez les numéros souhaités) :
+        	<textarea class="materialize-textarea" id="textarea1" rows="2" v-model="listePerso"> {{ listePerso }}</textarea>
 
-      <!-- Affichage des menus -->
-      <div class="col s4 l4">
+
+<!-- Pour les bordures colorées, j'ai modifié les lignes 3162 et 3168 -->
+    <!-- Affichage des menus -->
+    <div class="col s4 l4">
 
         <!-- Affichage des modules -->
         <ul class="collection with-header" v-if = showModule>
@@ -110,39 +107,41 @@ Name : Zenlike  Released for free under a Creative Commons Attribution 2.5 Licen
           <p @click="listeChapitres = []; chapitre = '';
           showModule = true; showChap = false" v-show = showChap> < Revenir aux modules </p></li>
         </ul>
+
         <ul class="collection with-header" v-if = showChap>
             <li class="collection-item" 
             v-for="item in listeChapitres" 
             @click="listeSousChapitres = item.sousChapitres; exosChapitre(item.sousChapitres); recupExos(); chapitre = item.nom; affichage(); 
             showSousChap = true; showChap = false;">
-            <div>{{ item.nom }}</div></li>
-          </ul>
+           		<div>{{ item.nom }}</div></li>
+        </ul>
 
-          <!-- Affichage des sous chapitres -->
-          <ul class="collection with-header" v-if = showSousChap>
-            <li class="collection-header" v-show = showSousChap > <h5>Sous-chapitres <h6> ({{ chapitre.substring(4,100) }})</h6></h5> 
+        <!-- Affichage des sous chapitres -->
+        <ul class="collection with-header" v-if = showSousChap>
+    	    <li class="collection-header" v-show = showSousChap > <h5>Sous-chapitres <h6> ({{ chapitre.substring(4,100) }})</h6></h5> 
             <p @click="listeSousChapitres = []; sousChap = ''; nbExos = 0; chapitre = ''; tabExos = []; afficheEx = [];
             showChap = true; showSousChap = false;"
             v-show = showSousChap> < Revenir aux chapitres</p></li>
-          </ul>
-          <ul class="collection with-header" v-if = showSousChap>
+        </ul>
+
+        <ul class="collection with-header" v-if = showSousChap>
               <li class="collection-item" 
               v-for="item in listeSousChapitres" 
               @click="exosSousChapitre(item); recupExos(); sousChap = item.nom; affichage();">
-              <div>{{ item.nom }}</div></li>
-            </ul>
+              	<div>{{ item.nom }}</div></li>
+        </ul>
 
-            <i>Nombre d'exercices {{ chapitre.substring(4,100) }} - {{ sousChap.substring(7, 100) }} : {{ nbExos }}</i>
-          </div>
+        <i>Nombre d'exercices {{ chapitre.substring(4,100) }} - {{ sousChap.substring(7, 100) }} : {{ nbExos }}</i>
+    </div>
 
       <!-- Liste des exercices -->
       <div class="col s3 l2">
         <ul class="collection with-header">
-          <li class="collection-header" draggable="true" ondragstart="event.dataTransfer.setData('text/plain', 'Ce texte peut être glissé')"> <h5>Liste des exercices 
+          <li class="collection-header"> <h5>Liste des exercices 
             <h6 v-if="chapitre || sousChap != ''">
               ({{ chapitre.substring(4,100) }} - {{ sousChap.substring(7, 100) }})
             </h6></h5> 
-            <div v-if="tabExos.length != 0"> <i class="material-icons" @click="changeSelection(); affichage()"> {{ selection }} </i> {{ texteSelection }} </div>
+            <div v-if="tabExos.length != 0"> <i class="material-icons" @click="changeSelection(); affichage()"> {{ selection }} </i> {{ texteSelection }} </div></li>
         </ul>
         <ul class="collection with-header" style="height: 600px; overflow: scroll; overflow: auto">
           <li class="collection-item" v-for="item in tabExos" v-if="item.exercice != ''">
@@ -156,27 +155,101 @@ Name : Zenlike  Released for free under a Creative Commons Attribution 2.5 Licen
         <ul class="collection with-header">
           <li class="collection-header"> <h5>Affichage des exercices</h5> </li>
         </ul>
-        <a class="btn-floating" @click="affichagePerso()"><i class="material-icons">check</i></a> Ma liste :
-        <textarea class="materialize-textarea" id="exercices" rows="2" v-model="listePerso"> {{ listePerso }}</textarea>
         
         <ul class="collection with-header" style="height: 600px; width: 100%; overflow: scroll; overflow: auto">
           <li class="collection-item" v-for="item in afficheEx" style="display: flex; height: 100%">
-            <iframe :src = "item" scrolling="no" frameborder="0" style="height: 100%; width: 100%"></iframe>
+            <iframe :src = "item" scrolling="no" frameborder="0" style="height: auto; width: auto"></iframe>
           </li>
         </ul>
+
+        <!-- Pour réduire l'affichage des exercices à droite, trouver comment réduire par sélection
+        <ul class="collection with-header" style="height: 600px; width: 100%; overflow: scroll; overflow: auto">
+          <li class="collection-item" v-for="item in afficheEx" style="display: flex; height: auto">
+            <iframe :src = "item" scrolling="no" frameborder="0" style="height: auto; width: auto"></iframe>
+          </li>
+        </ul> -->
       </div>
 
       <div class="fixed-action-btn">
-        <a class="btn-floating btn-large">
+        <a class="btn-floating btn-large yellow accent-4">
           <i class="large material-icons">menu</i>
         </a>
         <ul>
-          <li><span class="tooltipped" data-position="top" data-tooltip="Télécharger"><a class="btn-floating"><i class="material-icons">file_download</i></span></a></li>
-          <li><span class="tooltipped" data-position="top" data-tooltip="Imprimer"><a class="btn-floating"><i class="material-icons">print</i></span></a></li>
-          <li><span class="tooltipped" data-position="top" data-tooltip="Modifier"><a class="btn-floating"><i class="material-icons">edit</i></span></a></li>
+          <li><span class="tooltipped" data-position="top" data-tooltip="Télécharger"><a class="btn-floating orange darken-1"><i class="material-icons">file_download</i></a></span></li>
+          <li><span class="tooltipped" data-position="top" data-tooltip="Imprimer"><a class="btn-floating orange darken-1"><i class="material-icons">print</i></a></span></li>
+          <li><span class="tooltipped" data-position="top" data-tooltip="Modifier"><a class="btn-floating orange darken-1"><i class="material-icons">edit</i></a></span></li>
         </ul>
       </div>
 
+	</div>
+</div>
+
+<footer class="page-footer docs-footer deep-orange darken-3" style="padding-top: 0">
+      <div class="container" style="padding-top: 0">
+        <div class="row" >
+          <div class="col s12 m10 offset-m1">
+            <div class="row">
+              <div class="col l4 s12">
+                <h5>Auteurs</h5>
+                <p>
+Les cours et les vidéos sont produits par Arnaud Bodin (Université de Lille), Léa Blanc-Centi (Université de Lille), Niels Borne (Université de Lille), Benjamin Boutin (Université Rennes 1),
+Laura Desideri (Université de Lille), Damien Mégy (université de Lorraine) et Pascal Romon (Université Marne la Vallée) avec l'aide d'autres collègues. Les énoncés et corrections d'exercices proviennent de diverses universités ainsi que de classes de Math Sup
+et Math Spé. Le contenu est entièrement gratuit. <br/>
+Le site Exo7 et les vidéos sont soutenus financièrement par l'université Lille 1 et Unisciel ; le site
+est hébergé par la SMAI et la SMF. </p>
+              </div>
+
+            <div class="row">
+              <div class="col s12">
+                <h5>Sponsors</h5>
+              </div>
+              <div class="col s12">
+                <div class="patreon-footer-ad">
+                  <a href=http://www.unisciel.fr> <img src="images/logo_unisciel.gif" height="50"/></a>
+
+                  <a href=http://www.univ-lille1.fr> <img src="images/logo_lille1_new.png" height="50"/></a>
+
+                  <a href=http://www.univ-rennes1.fr> <img src="images/logo_rennes1.jpg" height="50"/></a>
+
+                  <a href=http://www.univ-mlv.fr> <img src="images/logo_marne-la-vallee.jpg" height="50"/></a>
+
+                  <a href=http://www.smai.emath.fr/> <img src="images/Logo-SMAI.png"/></a>
+
+                  <a href=http://www.smf.emath.fr/> <img src="images/Logo-SMF.png"/></a>
+                </div>
+              </div>
+            </div>
+
+            <div class="footer-copyright">
+              © 2014-<noscript>2018</noscript><script type="text/javascript">document.write(new Date().getFullYear());</script> Materialize, All rights reserved.
+              <a class="grey-text text-darken-1 right" href="https://github.com/Dogfalo/materialize/blob/master/LICENSE">MIT License</a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </footer>
+
+<script type="text/javascript">
+	$('.question').append(themes.data[this.liste[0]].question);
+	app.actualiserMathJax();
+
+ actualiserMathJax: function(){
+            if(typeof(MathJax)!= 'undefined') {// si MathJax est chargé, on relance le rendu
+                MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+            } else { // sinon, on le recharge et on relance le rendu en callback
+                $.getScript('https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML', function() {
+                MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+                });
+            }
+        },
+</script>
+
+<script type="text/x-mathjax-config">
+	MathJax.Hub.Config({
+    	tex2jax: {inlineMath: [['$','$'], ['\(','\)']]}
+    });
+</script>
 
 <script type="text/javascript">
     document.addEventListener('DOMContentLoaded', function() {
