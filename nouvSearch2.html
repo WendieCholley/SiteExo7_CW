@@ -83,6 +83,10 @@ Name : Zenlike  Released for free under a Creative Commons Attribution 2.5 Licen
   <div class="row"> 
     <div class="app">
 
+ Entrez un numéro d'exercice pour l'ajouter à la liste personnalisée : 
+ <a class="btn-floating yellow accent-4 waves-effect waves-light" @click="completeTabPerso(exercice); exercice='';"><i class="material-icons">add</i></a>
+ <textarea class="materialize textarea validate" v-model="exercice">{{ exercice }}</textarea>
+
 <!-- Pour les bordures colorées, j'ai modifié les lignes 3162 et 3168 -->
     <!-- Affichage des menus -->
     <div class="col s4 l4">
@@ -147,7 +151,7 @@ Name : Zenlike  Released for free under a Creative Commons Attribution 2.5 Licen
           <li class="collection-item" v-for="item in tabExos" v-if="item.exercice != ''">
           <i class="material-icons" @click="item.visible = changeIcone(item.visible); affichage(); verifSelection()">{{ item.visible }}</i> {{ item.exercice }} 
           <i id="ajout" class="material-icons" @click="completeTabPerso(item.exercice)"> add </i></li>
-        </ul>          
+        </ul>
         </div>
         <div class="col s6">
           <ul class="collection with-header" style="height: 600px; overflow: scroll; overflow: auto">
@@ -287,6 +291,7 @@ Name : Zenlike  Released for free under a Creative Commons Attribution 2.5 Licen
       texteSelection: 'Tout désélectionner',
       //Liste des exercices entrés par l'utilisateur
       tabExoPerso: [],
+      exercice: '',
     },
     methods: {
       //Méthode qui regroupe les listes d'exercices de tous les sous-chapitres d'un chapitre sélectionné, le paramètre étant la liste des sous-chapitres
@@ -415,9 +420,10 @@ Name : Zenlike  Released for free under a Creative Commons Attribution 2.5 Licen
           c++;
         }
       }
-      if(c == this.tabExoPerso.length){
+      if(c == this.tabExoPerso.length && numEx != ''){
         this.tabExoPerso.push(numEx);
       }
+      this.exercice='';
     },
     suppListePerso(Ex){
       var tabInter = [];
