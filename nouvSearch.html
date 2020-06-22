@@ -53,16 +53,17 @@ Name : Zenlike  Released for free under a Creative Commons Attribution 2.5 Licen
 -->
 
 <body onLoad="M.AutoInit();">
-
+	<div class="row">
 	<div id="header" class="row grey darken-4 white-text" style="margin: 0">
 		<div class="col l10"><h4>Cours et exercices<br> de mathématiques</h4></div>
             <a href="index2.html"> 
         	    <img src="images/LogoExo7-mini.png"  alt="Exo7"/>
             </a>
 	</div>
+	
   	<nav class="nav-extended deep-orange darken-3"style="margin-bottom: 15px">
     	<div class="nav-wrapper">
-      		<a class="brand-logo">Rechercher</a>
+      		<a class="brand-logo center">Rechercher</a>
     	</div>
 
     <div class="nav-content" >
@@ -76,6 +77,8 @@ Name : Zenlike  Released for free under a Creative Commons Attribution 2.5 Licen
       </ul>
     </div>
   </nav>
+
+</div>
 
   <div class="row"> 
     <div class="app">
@@ -175,7 +178,7 @@ Name : Zenlike  Released for free under a Creative Commons Attribution 2.5 Licen
           <i class="large material-icons">menu</i>
         </a>
         <ul>
-          <li><span class="tooltipped" data-position="top" data-tooltip="Télécharger"><a class="btn-floating orange darken-1"><i class="material-icons">file_download</i></a></span></li>
+          <li><span class="tooltipped" data-position="top" data-tooltip="Télécharger"><a class="btn-floating orange darken-1" href="extract5.php"><i class="material-icons">file_download</i></a></span></li>
           <li><span class="tooltipped" data-position="top" data-tooltip="Imprimer"><a class="btn-floating orange darken-1"><i class="material-icons">print</i></a></span></li>
           <li><span class="tooltipped" data-position="top" data-tooltip="Modifier"><a class="btn-floating orange darken-1"><i class="material-icons">edit</i></a></span></li>
         </ul>
@@ -187,16 +190,13 @@ Name : Zenlike  Released for free under a Creative Commons Attribution 2.5 Licen
 <footer class="page-footer docs-footer deep-orange darken-3" style="padding-top: 0">
       <div class="container" style="padding-top: 0">
         <div class="row" >
-          <div class="col s12 m10 offset-m1">
+          <div class="col s12">
             <div class="row">
-              <div class="col l4 s12">
+              <div class="col s12">
                 <h5>Auteurs</h5>
                 <p>
-Les cours et les vidéos sont produits par Arnaud Bodin (Université de Lille), Léa Blanc-Centi (Université de Lille), Niels Borne (Université de Lille), Benjamin Boutin (Université Rennes 1),
-Laura Desideri (Université de Lille), Damien Mégy (université de Lorraine) et Pascal Romon (Université Marne la Vallée) avec l'aide d'autres collègues. Les énoncés et corrections d'exercices proviennent de diverses universités ainsi que de classes de Math Sup
-et Math Spé. Le contenu est entièrement gratuit. <br/>
-Le site Exo7 et les vidéos sont soutenus financièrement par l'université Lille 1 et Unisciel ; le site
-est hébergé par la SMAI et la SMF. </p>
+    Les cours et les vidéos sont produits par Arnaud Bodin (Université de Lille), Léa Blanc-Centi (Université de Lille), Niels Borne (Université de Lille), Benjamin Boutin (Université Rennes 1), Laura Desideri (Université de Lille), Damien Mégy (université de Lorraine) et Pascal Romon (Université Marne la Vallée) avec l'aide d'autres collègues. Les énoncés et corrections d'exercices proviennent de diverses universités ainsi que de classes de Math Sup et Math Spé. Le contenu est entièrement gratuit. <br/>
+    Le site Exo7 et les vidéos sont soutenus financièrement par l'université Lille 1 et Unisciel ; le site est hébergé par la SMAI et la SMF. </p>
               </div>
 
             <div class="row">
@@ -259,7 +259,6 @@ est hébergé par la SMAI et la SMF. </p>
     });
   });
 </script>
-
 
   <!-- VueJS -->
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -429,7 +428,7 @@ est hébergé par la SMAI et la SMF. </p>
         }
       }
       if(c == tabInter.length){
-        this.listePerso += numEx + ' ';
+        this.listePerso += ' ' + numEx;
       }
     }
   },

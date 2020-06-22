@@ -172,15 +172,12 @@ Name : Zenlike  Released for free under a Creative Commons Attribution 2.5 Licen
         <ul class="collection with-header">
           <li class="collection-header"> <h5>Ma liste</h5></li>
         </ul>
+        <div class="col s12"><button class="btn red" style="width: 100%" onclick="var m = prompt('Entrez le numéro de l\'exercice'); app.completeTabPerso(m)">Ajouter</button></div>
+        <div class="col s12"><button class="btn red" @click="persoAffichee = true; affichagePerso()" style="width: 100%">Afficher</button></div>
+        <div class="col s12"><button class="btn red" @click="tabExoPerso = []" style="width: 100%">Réinitialiser</button></div>
         <ul class="collection with-header" style="height: 600px; overflow: scroll; overflow: auto">
-          <li class="collection-item" @click="affichagePerso()">
-            Afficher
-          </li>
-          <li class="collection-item" @click="tabExoPerso = []">
-            Réinitialiser
-          </li>
           <li class="collection-item" v-for="item in tabExoPerso" v-if="item != ' '">
-            {{ item }} <i class="material-icons" @click="suppListePerso(item)"> delete </i></li>
+            {{ item }} <i class="material-icons" @click="suppListePerso(item); affichagePerso()"> delete </i></li>
         </ul>
       </div>
 	</div>
@@ -282,6 +279,7 @@ Name : Zenlike  Released for free under a Creative Commons Attribution 2.5 Licen
       //Liste des exercices entrés par l'utilisateur
       tabExoPerso: [],
       exercice: '',
+      persoAffichee: false,
     },
     methods: {
       //Méthode qui regroupe les listes d'exercices de tous les sous-chapitres d'un chapitre sélectionné, le paramètre étant la liste des sous-chapitres
@@ -389,18 +387,19 @@ Name : Zenlike  Released for free under a Creative Commons Attribution 2.5 Licen
       }
     },
     affichagePerso(){
-      this.afficheEx = [];
-      var chemin = 'exercices/'
-      var numExo;
-      for(var n in this.tabExoPerso) {
-        if(this.tabExoPerso[n] != ''){
-          numExo = this.tabExoPerso[n];
-          while(numExo.length < 6) {
-            numExo = 0 + numExo;
+      if(this.persoAffichee){
+        this.afficheEx = [];
+        var chemin = 'exercices/'
+        var numExo;
+        for(var n in this.tabExoPerso) {
+          if(this.tabExoPerso[n] != ''){
+            numExo = this.tabExoPerso[n];
+            while(numExo.length < 6) {
+              numExo = 0 + numExo;
+            }
+            this.afficheEx.push(chemin + 'ex' + numExo + '.txt');
           }
-          this.afficheEx.push(chemin + 'ex' + numExo + '.txt');
         }
-        
       }
     },
     completeTabPerso(numEx){

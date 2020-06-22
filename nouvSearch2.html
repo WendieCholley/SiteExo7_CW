@@ -155,14 +155,14 @@ Name : Zenlike  Released for free under a Creative Commons Attribution 2.5 Licen
         </div>
         <div class="col s6">
           <ul class="collection with-header" style="height: 600px; overflow: scroll; overflow: auto">
-            <li class="collection-item" @click="affichagePerso()">
+            <li class="collection-item" @click="persoAffichee = true; affichagePerso()">
               Afficher
             </li>
             <li class="collection-item" @click="tabExoPerso = []">
               Réinitialiser
             </li>
             <li class="collection-item" v-for="item in tabExoPerso" v-if="item != ' '">
-              {{ item }} <i class="material-icons" @click="suppListePerso(item)"> delete </i>
+              {{ item }} <i class="material-icons" @click="suppListePerso(item); affichagePerso()"> delete </i>
             </li>
           </ul>
         </div>
@@ -292,6 +292,7 @@ Name : Zenlike  Released for free under a Creative Commons Attribution 2.5 Licen
       //Liste des exercices entrés par l'utilisateur
       tabExoPerso: [],
       exercice: '',
+      persoAffichee: false,
     },
     methods: {
       //Méthode qui regroupe les listes d'exercices de tous les sous-chapitres d'un chapitre sélectionné, le paramètre étant la liste des sous-chapitres
@@ -399,18 +400,19 @@ Name : Zenlike  Released for free under a Creative Commons Attribution 2.5 Licen
       }
     },
     affichagePerso(){
-      this.afficheEx = [];
-      var chemin = 'exercices/'
-      var numExo;
-      for(var n in this.tabExoPerso) {
-        if(this.tabExoPerso[n] != ''){
-          numExo = this.tabExoPerso[n];
-          while(numExo.length < 6) {
-            numExo = 0 + numExo;
+      if(this.persoAffichee){
+        this.afficheEx = [];
+        var chemin = 'exercices/'
+        var numExo;
+        for(var n in this.tabExoPerso) {
+          if(this.tabExoPerso[n] != ''){
+            numExo = this.tabExoPerso[n];
+            while(numExo.length < 6) {
+              numExo = 0 + numExo;
+            }
+            this.afficheEx.push(chemin + 'ex' + numExo + '.txt');
           }
-          this.afficheEx.push(chemin + 'ex' + numExo + '.txt');
         }
-        
       }
     },
     completeTabPerso(numEx){
