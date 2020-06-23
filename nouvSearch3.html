@@ -61,14 +61,7 @@ Name : Zenlike  Released for free under a Creative Commons Attribution 2.5 Licen
         <li><span class="tooltipped" data-position="right" data-tooltip="Retour à la page d'accueil" data-backgroun-color="red"><a href="index2.html"><i class="material-icons">undo</i></a></li></span>
         <li><span class="tooltipped" data-position="right" data-tooltip="Télécharger"><a href="sass.html"><a href="#"><i class="material-icons">file_download</i></a></li></span>
         <li><span class="tooltipped" data-position="right" data-tooltip="Imprimer"><a href="sass.html"><a href="#"><i class="material-icons">print</i></a></li></span>
-        <li>
-          <span class="tooltipped" data-position="right" data-tooltip="Chercher un exercice">
-            <div class="input-field">
-              <input id="search" type="search" required>
-              <label class="label-icon" for="search"><i class="material-icons">search</i></label>
-              <i class="material-icons">close</i>
-            </div>
-          </span>
+        <li><span class="tooltipped" data-position="right" data-tooltip="Chercher un exercice"><i class="material-icons" onclick="var m = prompt('Entrez le numéro de l\'exercice'); app.listeExos = ''; app.listeExos += m; app.recupExos(); app.affichage()">search</i></span>
         </li>
       </ul>
       <ul class="right">
@@ -298,7 +291,7 @@ Name : Zenlike  Released for free under a Creative Commons Attribution 2.5 Licen
       this.listeExos = [];
       this.listeExos += nom.exos;
     },
-    //Méthode qui insère un par un les exercices de listeExos dans un tableau pour pouvoir les afficher les afficher
+    //Méthode qui insère un par un les exercices de listeExos dans un tableau pour pouvoir les afficher
     recupExos(){
       this.tabExos = [];
       //Place tous les exercices dans un tableau pour trouver leur fichier .txt
