@@ -174,7 +174,11 @@ De plus, l'affichage des exercices ne disparaît pas lorsqu'on clique sur "reven
         <div class="col s12"><button class="btn red" @click="tabExoPerso = []" style="width: 100%">Réinitialiser</button></div>
         <ul class="collection with-header" style="height: 600px; overflow: scroll; overflow: auto">
           <li class="collection-item" v-for="item in tabExoPerso" v-if="item != ' '">
-            {{ item }} <i class="material-icons" @click="suppListePerso(item); affichagePerso()"> delete </i></li>
+            {{ item.exercice }}
+            <i class="material-icons" @click="item.visible = changeIcone(item.visible); affichagePerso()"> {{ item.visible }} </i> 
+            <i class="material-icons" @click="suppListePerso(item); affichagePerso()"> delete </i>
+            <i class="material-icons" @click="changeOrdre('up', item)"> arrow_upward </i>
+            <i class="material-icons" @click="changeOrdre('down', item)"> arrow_downward </i></li>
         </ul>
       </div>
 	</div>
@@ -275,7 +279,7 @@ De plus, l'affichage des exercices ne disparaît pas lorsqu'on clique sur "reven
       texteSelection: 'Tout désélectionner',
       //Liste des exercices entrés par l'utilisateur
       tabExoPerso: [],
-      exercice: '',
+      exercicePerso: '',
       persoAffichee: false,
     },
     methods: {
@@ -389,32 +393,38 @@ De plus, l'affichage des exercices ne disparaît pas lorsqu'on clique sur "reven
         var chemin = 'exercices/'
         var numExo;
         for(var n in this.tabExoPerso) {
-          if(this.tabExoPerso[n] != ''){
-            numExo = this.tabExoPerso[n];
-            while(numExo.length < 6) {
-              numExo = 0 + numExo;
+          if(this.tabExoPerso[n].visible == 'visibility'){
+            if(this.tabExoPerso[n].exercice != ''){
+              numExo = this.tabExoPerso[n].exercice;
+              while(numExo.length < 6) {
+                numExo = 0 + numExo;
+              }
+              this.afficheEx.push(chemin + 'ex' + numExo + '.txt');
             }
-            this.afficheEx.push(chemin + 'ex' + numExo + '.txt');
           }
         }
       }
     },
     completeTabPerso(numEx){
       var c = 0;
+      var objEx = new Object();
       for(var n in this.tabExoPerso){
-        if(this.tabExoPerso[n] != numEx){
+        if(this.tabExoPerso[n].exercice != numEx){
           c++;
         }
       }
       if(c == this.tabExoPerso.length && numEx != ''){
-        this.tabExoPerso.push(numEx);
+        objEx.exercice = numEx;
+        objEx.visible = this.icone;
+        this.tabExoPerso.push(objEx);
       }
-      this.exercice='';
+      //Pour l'ajout d'un exercice à la main :
+      this.exercicePerso='';
     },
     suppListePerso(Ex){
       var tabInter = [];
       for(var n in this.tabExoPerso){
-        if(this.tabExoPerso[n] != Ex){
+        if(this.tabExoPerso[n].exercice != Ex){
           tabInter.push(this.tabExoPerso[n]);
         }
       }
@@ -422,7 +432,56 @@ De plus, l'affichage des exercices ne disparaît pas lorsqu'on clique sur "reven
       for(var n in tabInter){
         this.tabExoPerso.push(tabInter[n]);
       }
-    }
+    },
+    changeOrdre(direction, exo){
+      var tabInter = [];
+      var position;
+      for(var n in this.tabExoPerso){
+        if(this.tabExoPerso[n] == exo){
+          position = n;
+        }
+      }
+      //Monter l'exercice
+      if(direction == 'up' && position != 0){
+        var p = 0;
+        while(p+1 != position){
+          tabInter.push(this.tabExoPerso[p]);
+          p++;
+        }
+        tabInter.push(this.tabExoPerso[p+1]);
+        tabInter.push(this.tabExoPerso[p]);
+        p += 1;
+        while(p < this.tabExoPerso.length-1){
+          p++;
+          tabInter.push(this.tabExoPerso[p]);
+        }
+        this.tabExoPerso = [];
+        for(var n in tabInter){
+          this.tabExoPerso.push(tabInter[n]);
+        }
+      } 
+      //Descendre l'exercice
+      else if(position != this.tabExoPerso.length-1){
+        var p = this.tabExoPerso.length-1;
+        while(p-1 != position){
+          tabInter.push(this.tabExoPerso[p]);
+          p--;
+        }
+        tabInter.push(this.tabExoPerso[p-1]);
+        tabInter.push(this.tabExoPerso[p]);
+        p -= 1;
+        while(p > 0){
+          p--;
+          tabInter.push(this.tabExoPerso[p]);
+        }
+        this.tabExoPerso = [];
+        var i = tabInter.length-1;
+        while(i >= 0){
+          this.tabExoPerso.push(tabInter[i]);
+          i--;
+        }
+      }
+    },
   },
   created(){
     //Insertion des anciens tabeaux du fichier tableaux.js
