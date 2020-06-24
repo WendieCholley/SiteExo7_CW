@@ -177,8 +177,8 @@ De plus, l'affichage des exercices ne disparaît pas lorsqu'on clique sur "reven
             {{ item.exercice }}
             <i class="material-icons" @click="item.visible = changeIcone(item.visible); affichagePerso()"> {{ item.visible }} </i> 
             <i class="material-icons" @click="suppListePerso(item); affichagePerso()"> delete </i>
-            <i class="material-icons" @click="changeOrdre('up', item)"> arrow_upward </i>
-            <i class="material-icons" @click="changeOrdre('down', item)"> arrow_downward </i></li>
+            <i class="material-icons" @click="changeOrdre('up', item); affichagePerso()"> arrow_upward </i>
+            <i class="material-icons" @click="changeOrdre('down', item); affichagePerso"> arrow_downward </i></li>
         </ul>
       </div>
 	</div>
