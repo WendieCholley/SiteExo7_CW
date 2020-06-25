@@ -426,7 +426,7 @@ De plus, l'affichage des exercices ne disparaît pas lorsqu'on clique sur "reven
     suppListePerso(Ex){
       var tabInter = [];
       for(var n in this.tabExoPerso){
-        if(this.tabExoPerso[n].exercice != Ex){
+        if(this.tabExoPerso[n] != Ex){
           tabInter.push(this.tabExoPerso[n]);
         }
       }

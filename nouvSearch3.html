@@ -170,7 +170,9 @@ Name : Zenlike  Released for free under a Creative Commons Attribution 2.5 Licen
         <div class="col s12"><button class="btn red" @click="tabExoPerso = []" style="width: 100%">Réinitialiser</button></div>
         <ul class="collection with-header" style="height: 600px; overflow: scroll; overflow: auto">
           <li class="collection-item" v-for="item in tabExoPerso" v-if="item != ' '">
-            {{ item }} <i class="material-icons" @click="suppListePerso(item); affichagePerso()"> delete </i></li>
+            {{ item.exercice }} 
+            <i class="material-icons" @click="item.visible = changeIcone(item.visible); affichagePerso()"> {{ item.visible }} </i>
+            <i class="material-icons" @click="suppListePerso(item.exercice); affichagePerso()"> delete </i></li>
         </ul>
       </div>
 	</div>
@@ -385,26 +387,32 @@ Name : Zenlike  Released for free under a Creative Commons Attribution 2.5 Licen
         var chemin = 'exercices/'
         var numExo;
         for(var n in this.tabExoPerso) {
-          if(this.tabExoPerso[n] != ''){
-            numExo = this.tabExoPerso[n];
-            while(numExo.length < 6) {
-              numExo = 0 + numExo;
+          if(this.tabExoPerso[n].visible == 'visibility'){
+            if(this.tabExoPerso[n].exercice != ''){
+              numExo = this.tabExoPerso[n].exercice;
+              while(numExo.length < 6) {
+                numExo = 0 + numExo;
+              }
+              this.afficheEx.push(chemin + 'ex' + numExo + '.txt');
             }
-            this.afficheEx.push(chemin + 'ex' + numExo + '.txt');
           }
         }
       }
     },
     completeTabPerso(numEx){
       var c = 0;
+      var objEx = new Object();
       for(var n in this.tabExoPerso){
-        if(this.tabExoPerso[n] != numEx){
+        if(this.tabExoPerso[n].exercice != numEx){
           c++;
         }
       }
       if(c == this.tabExoPerso.length && numEx != ''){
-        this.tabExoPerso.push(numEx);
+        objEx.exercice = numEx;
+        objEx.visible = this.icone;
+        this.tabExoPerso.push(objEx);
       }
+      //Pour l'ajout d'un exercice à la main :
       this.exercice='';
     },
     suppListePerso(Ex){
