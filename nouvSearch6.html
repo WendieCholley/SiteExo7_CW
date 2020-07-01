@@ -43,8 +43,179 @@
       color: blue;
     }
 
-  </style>
+    .modal-mask {
+      position: fixed;
+      z-index: 9998;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: table;
+      transition: opacity 0.3s ease;
+    }
 
+    .modal-wrapper {
+      display: table-cell;
+      vertical-align: middle;
+    }
+
+    .modal-container {
+      width: 700px;
+      margin: 15px auto;
+      padding: 20px 30px;
+      background-color: #fff;
+      border-radius: 2px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
+      transition: all 0.3s ease;
+      font-family: Helvetica, Arial, sans-serif;
+    }
+
+    .modal-header h3 {
+      margin-top: 0;
+      color: orange;
+      text-align: center;
+    }
+
+    .modal-body {
+      margin: 20px 0;
+    }
+
+    .modal-default-button {
+      float: right;
+      margin-bottom: auto;
+    }
+
+      /*
+      * The following styles are auto-applied to elements with
+      * transition="modal" when their visibility is toggled
+      * by Vue.js.
+      *
+      * You can easily play with the modal transition by editing
+      * these styles.
+      */
+
+      .modal-enter {
+        opacity: 0;
+      }
+
+      .modal-leave-active {
+        opacity: 0;
+      }
+
+      .modal-enter .modal-container,
+      .modal-leave-active .modal-container {
+        -webkit-transform: scale(1.1);
+        transform: scale(1.1);
+      }
+  </style>
+    <!-- template for the modal component -->
+    <script type="text/x-template" id="modal-template">
+      <transition name="modal">
+        <div class="modal-mask">
+          <div class="modal-wrapper">
+            <div class="modal-container">
+
+              <div class="modal-header">
+                <slot name="header">
+
+                </slot>
+              </div>
+
+              <div class="modal-body">
+                <slot name="body">
+                  <div class="container">
+
+                    <div class="card white z-depth-3"><div class="card-content" style="padding:10%">
+
+                      <form  target="_blank" name="formulaire" action="http://exo7.emath.fr/bin/extract5.php" method="post">
+
+
+
+                        <div style="display:flex;justify-content: space-between;">
+                          <input type=text name="txt-annee" value="Année" style="width:30%;border:1px dashed grey; padding:3px; height:1.2rem" class="textinput" >
+                          <input type=text name="txt-num" value="Numéro de module" style="width:30%;text-align:right;border:1px dashed grey; padding:3px; height:1.2rem" class="textinput">
+                        </div>
+                        <div style="display:flex;justify-content: space-between;">
+                          <input type=text name="txt-univ" value="Établissement" style="width:30%;border:1px dashed grey; padding:3px; height:1.2rem" class="textinput">
+                          <input type=text name="txt-module" value="Module" style="width:30%;text-align:right;border:1px dashed grey; padding:3px; height:1.2rem" class="textinput">
+                        </div>
+                        <hr class="hrule">
+                        <div style="text-align:center">
+                          <input type=text name="txt-titre" size="30" align="center" value="Titre de la planche"  style="width:60%;font-size:200%;text-align:center;border:1px dashed grey; padding:3px; height:2rem" class="textinput">
+                        </div>
+                        <hr class="hrule">
+                        <br/><br/>
+                        <h6>Exercices à inclure dans la feuille :</h6>
+                        <textarea name="MesExos" id="maListe" rows="5" cols="100" style="width=100%;height:3em;resize:none;" onkeyup="maj()" v-model="tabExoPerso"> {{tabExoPerso}}
+                        </textarea>
+                        <!-- $theliste est la liste qui peux provenir d'une selection en ligne -->
+                        <br>
+                        <i> Vous pouvez saisir directement les numéros des exercices.
+                        Exemple : 7 11 14-18 : pour les exercices 7, 11 et de 14 à 18.</i>
+
+
+
+
+
+                        <div style="padding-top:20px">
+
+                          <h6>Parties des exercices à inclure (si disponible) :</h6>
+<!-- J'ai modifié lignes 6913 et 6914 pour mettre en rouge les coches -->
+                          <label >
+                            <input type="checkbox" name="Pos[]" value="e1" checked="checked" style="border-color: red;">
+                            <span>Énoncés</span>
+                          </label>
+                          <br/>
+                          <label>
+                            <input type="checkbox" name="Pos[]" value="i1" checked="checked">
+                            <span>Indications</span>
+                          </label>
+                          <label>
+                            <input type="checkbox" name="Pos[]" value="i2" checked="checked">
+                            <span>sur une page à part</span>
+                          </label>
+                          <br/>
+                          <label>
+                            <input type="checkbox" name="Pos[]" value="c1" checked="checked">
+                            <span>Corrections</span>
+                          </label>
+                          <label>
+                            <input type="checkbox" name="Pos[]" value="c2"  checked="checked">
+                            <span>sur une page à part</span>
+                          </label>
+                        </div>
+
+                        <div style="text-align:center;padding:20px">
+
+                          <input class="btn red" type="submit" name="pdf"   value="Exporter en PDF">
+                          <input class="btn red"  type="submit" name="tex"   value="Exporter en LaTeX">
+                        </div>
+
+                        <h6>Lien pour accéder à cette page avec cette même liste pré-chargée:</h6>
+
+                        <input id="permalien" type="text" value="" style="width:100%">
+                        <input type="button" class="btn red" onClick="copier()" value="Copier l'URL dans le presse-papier" style="width:auto">
+
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                </slot>
+              </div>
+
+              <div class="modal-footer">
+                <slot name="footer">
+                  <button class="modal-default-button" @click="$emit('close')">
+                    Fermer
+                  </button>
+                </slot>
+              </div>
+            </div>
+          </div>
+        </div>
+      </transition>
+    </script>
 </head>
 
 <!--
@@ -77,6 +248,15 @@ De plus, l'affichage des exercices ne disparaît pas lorsqu'on clique sur "reven
 
   <div class="row"> 
     <div class="app">
+      <button id="show-modal" @click="showModal = true">Aperçu</button>
+      <!-- use the modal component, pass in the prop -->
+      <modal v-if="showModal" @close="showModal = false">
+        <!--
+      you can use custom content here to overwrite
+      default content
+    -->
+        <h3 slot="header">Aperçu de la feuille d'exercices</h3>
+      </modal>
 
 <!-- Pour les bordures colorées, j'ai modifié les lignes 3162 et 3168 -->
     <!-- Affichage des menus -->
@@ -162,20 +342,20 @@ De plus, l'affichage des exercices ne disparaît pas lorsqu'on clique sur "reven
       <!-- Affichage liste personnalisée -->
       <div class="col s2">
         <ul class="collection with-header">
-          <li class="collection-header"> <h6>Ma liste</h6></li>
+          <li class="collection-header"> <h5>Ma liste</h5></li>
         </ul>
-        <div class="col s3"><span class="tooltipped" data-position="bottom" data-tooltip="Ajouter"><i class="material-icons" onclick="var m = prompt('Entrez le numéro de l\'exercice'); app.completeTabPerso(m)">add</i></span></div>
+        <div class="col s4"><span class="tooltipped" data-position="bottom" data-tooltip="Ajouter"><i class="material-icons" onclick="var m = prompt('Entrez le numéro de l\'exercice'); app.completeTabPerso(m)">add</i></span></div>
         
-        <div class="col s3"><span class="tooltipped" data-position="bottom" data-tooltip="Afficher"><i class="material-icons" @click="persoAffichee = true; affichagePerso()">visibility</i></span></div>
+        <div class="col s4"><span class="tooltipped" data-position="bottom" data-tooltip="Afficher"><i class="material-icons" @click="persoAffichee = true; affichagePerso()">visibility</i></span></div>
         
-        <div class="col s3"><span class="tooltipped" data-position="bottom" data-tooltip="Réinitialiser"><i class="material-icons" @click="tabExoPerso = []; reorganisation = false">delete</i></span></div>
-        
-        <div class="col s3"><span class="tooltipped" data-position="bottom" data-tooltip="Trier"><i class="material-icons" @click="reorganisation = true">filter_list</i></span></div>
-        <ul class="collection with-header" style="height: 600px; overflow: scroll; overflow: auto"> 
+        <div class="col s4"><span class="tooltipped" data-position="bottom" data-tooltip="Réinitialiser"><i class="material-icons" @click="tabExoPerso = []; reorganisation = false">delete</i></span></div>
+        <ul class="collection with-header" style="height: 600px; overflow: scroll; overflow: auto">
           <li class="collection-item" v-for="item in tabExoPerso" v-if="item != ' '">
-            <i class="material-icons" v-if="reorganisation" @click="changeOrdre(item); affichagePerso()"> {{ item.reorganiser }} </i>  {{ item.exercice }}
-          <i class="material-icons" @click="item.visible = changeIcone(item.visible); affichagePerso()"> {{ item.visible }} </i> 
-          <i class="material-icons" @click="suppListePerso(item); affichagePerso()"> delete </i></li>
+            {{ item.exercice }}
+            <i class="material-icons" @click="item.visible = changeIcone(item.visible); affichagePerso()"> {{ item.visible }} </i> 
+            <i class="material-icons" @click="suppListePerso(item); affichagePerso()"> delete </i>
+            <i class="material-icons" @click="changeOrdre('up', item); affichagePerso()"> arrow_upward </i>
+            <i class="material-icons" @click="changeOrdre('down', item); affichagePerso"> arrow_downward </i></li>
         </ul>
       </div>
   </div>
@@ -231,13 +411,6 @@ De plus, l'affichage des exercices ne disparaît pas lorsqu'on clique sur "reven
       direction: 'left'
     });
   });
-
-    $('.tooltipped').tooltip({delay: 50}).each(function () {
-    var background = $(this).data('background-color');
-    if (background) {
-        $("#" + $(this).data('tooltip-id')).find(".backdrop").addClass(background);
-    }
-});
 </script>
 
   <!-- VueJS -->
@@ -247,10 +420,16 @@ De plus, l'affichage des exercices ne disparaît pas lorsqu'on clique sur "reven
   <script type="text/javascript" src="tableaux.js"></script>
   <script type="text/javascript" src="materialize/js/materialize.js">  </script>
 
+
 <script>
+  // register modal component
+  Vue.component("modal", {
+    template: "#modal-template"
+  });
   const app = new Vue({
     el: ".app",
     data: {
+      showModal : false,
       //Tableau d'objets où vont être tous les modules, chapitres, sous chapitres et listes d'exercices
       tabModules: [],
       //Données pour l'affichage
@@ -276,10 +455,8 @@ De plus, l'affichage des exercices ne disparaît pas lorsqu'on clique sur "reven
       texteSelection: 'Tout désélectionner',
       //Liste des exercices entrés par l'utilisateur
       tabExoPerso: [],
-      exercice: '',
+      exercicePerso: '',
       persoAffichee: false,
-      reorganiser: 'check_box_outline_blank',
-      reorganisation: false,
     },
     methods: {
       //Méthode qui regroupe les listes d'exercices de tous les sous-chapitres d'un chapitre sélectionné, le paramètre étant la liste des sous-chapitres
@@ -433,7 +610,7 @@ De plus, l'affichage des exercices ne disparaît pas lorsqu'on clique sur "reven
         this.tabExoPerso.push(tabInter[n]);
       }
     },
-    changeOrdre(exo){
+    changeOrdre(direction, exo){
       var tabInter = [];
       var position;
       for(var n in this.tabExoPerso){
@@ -441,43 +618,47 @@ De plus, l'affichage des exercices ne disparaît pas lorsqu'on clique sur "reven
           position = n;
         }
       }
-      //Dans ce cas, on le met en haut de la liste, après ceux déjà insérés
-      if(exo.reorganiser == 'check_box_outline_blank'){
-        console.log('coucou');
-        var n = 0;
-        while(n < this.tabExoPerso.length){
-          if(this.tabExoPerso[n].reorganiser == 'check_box'){
-            tabInter.push(this.tabExoPerso[n]);
-            n++;
-          } else {
-            tabInter.push(exo);
-            while(n < this.tabExoPerso.length){
-              if(n != position){
-                tabInter.push(this.tabExoPerso[n]);
-              }
-              n++;
-            }
-          }
+      //Monter l'exercice
+      if(direction == 'up' && position != 0){
+        var p = 0;
+        while(p+1 != position){
+          tabInter.push(this.tabExoPerso[p]);
+          p++;
         }
-        exo.reorganiser = 'check_box';
+        tabInter.push(this.tabExoPerso[p+1]);
+        tabInter.push(this.tabExoPerso[p]);
+        p += 1;
+        while(p < this.tabExoPerso.length-1){
+          p++;
+          tabInter.push(this.tabExoPerso[p]);
+        }
+        this.tabExoPerso = [];
+        for(var n in tabInter){
+          this.tabExoPerso.push(tabInter[n]);
+        }
       } 
-      //Sinon on le remet en bas de la liste
-      else {
-        var n = 0;
-        while(n < this.tabExoPerso.length){
-          if(n != position){
-            tabInter.push(this.tabExoPerso[n]);
-          }
-          n++;
+      //Descendre l'exercice
+      else if(position != this.tabExoPerso.length-1){
+        var p = this.tabExoPerso.length-1;
+        while(p-1 != position){
+          tabInter.push(this.tabExoPerso[p]);
+          p--;
         }
-        tabInter.push(this.tabExoPerso[position]);
-        exo.reorganiser = 'check_box_outline_blank';
+        tabInter.push(this.tabExoPerso[p-1]);
+        tabInter.push(this.tabExoPerso[p]);
+        p -= 1;
+        while(p > 0){
+          p--;
+          tabInter.push(this.tabExoPerso[p]);
+        }
+        this.tabExoPerso = [];
+        var i = tabInter.length-1;
+        while(i >= 0){
+          this.tabExoPerso.push(tabInter[i]);
+          i--;
+        }
       }
-      this.tabExoPerso = [];
-      for(var n in tabInter){
-        this.tabExoPerso.push(tabInter[n]);
-      }
-    }
+    },
   },
   created(){
     //Insertion des anciens tabeaux du fichier tableaux.js
