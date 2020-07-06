@@ -232,7 +232,6 @@ De plus, l'affichage des exercices ne disparaît pas lorsqu'on clique sur "reven
         <a href="#!" class="brand-logo center">Rechercher des exercices</a>
         <ul class="left">
           <li><span class="tooltipped" data-position="right" data-tooltip="Retour à la page d'accueil" data-backgroun-color="red"><a href="index2.html"><i class="material-icons">undo</i></a></span></li>
-          <li><span id="show-modal" class="tooltipped" data-position="right" data-tooltip="Exporter"><a href="#"><i class="material-icons" @click="showModal = true">open_in_new</i></a></span></li>
           <li><span class="tooltipped" data-position="right" data-tooltip="Imprimer"><a href="#"><i class="material-icons">print</i></a></span></li>
           <li><span class="tooltipped" data-position="right" data-tooltip="Chercher un exercice"><i class="material-icons" onclick="var m = prompt('Entrez le numéro de l\'exercice'); app.listeExos = ''; app.listeExos += m; app.recupExos(); app.affichage()">search</i></span>
           </li>
@@ -334,18 +333,22 @@ Of a set \(\mathcal{S}\) is a bijection \(\psi : \mathcal{S} \rightarrow \mathca
         <ul class="collection with-header">
           <li class="collection-header"> <h5>Ma liste</h5></li>
         </ul>
-        <div class="col s4"><span class="tooltipped" data-position="bottom" data-tooltip="Ajouter"><i class="material-icons" onclick="var m = prompt('Entrez le numéro de l\'exercice'); app.completeTabPerso(m)">add</i></span></div>
+        <div class="col s3"><span class="tooltipped" data-position="bottom" data-tooltip="Ajouter"><i class="material-icons" onclick="var m = prompt('Entrez le numéro de l\'exercice'); app.completeTabPerso(m)">add</i></span></div>
         
-        <div class="col s4"><span class="tooltipped" data-position="bottom" data-tooltip="Afficher"><i class="material-icons" @click="persoAffichee = true; affichagePerso()">visibility</i></span></div>
+        <div class="col s3"><span class="tooltipped" data-position="bottom" data-tooltip="Afficher"><i class="material-icons" @click="persoAffichee = true; affichagePerso()">visibility</i></span></div>
         
-        <div class="col s4"><span class="tooltipped" data-position="bottom" data-tooltip="Réinitialiser"><i class="material-icons" @click="tabExoPerso = []; reorganisation = false">delete</i></span></div>
+        <div class="col s3"><span class="tooltipped" data-position="bottom" data-tooltip="Réinitialiser"><i class="material-icons" @click="tabExoPerso = []; reorganisation = false">delete</i></span></div>
+
+        <div class="col s3"><span id="show-modal" class="tooltipped" data-position="bottom" data-tooltip="Exporter"><i class="material-icons" @click="showModal = true">open_in_new</i></span></div>
+
         <ul class="collection with-header" style="height: 600px; overflow: scroll; overflow: auto">
           <li class="collection-item" v-for="item in tabExoPerso" v-if="item != ' '">
             {{ item.exercice }}
             <i class="material-icons" @click="item.visible = changeIcone(item.visible); affichagePerso()"> {{ item.visible }} </i> 
             <i class="material-icons" @click="suppListePerso(item); affichagePerso()"> delete </i>
             <i class="material-icons" @click="changeOrdre('up', item); affichagePerso()"> arrow_upward </i>
-            <i class="material-icons" @click="changeOrdre('down', item); affichagePerso"> arrow_downward </i></li>
+            <i class="material-icons" @click="changeOrdre('down', item); affichagePerso"> arrow_downward </i>
+          </li>
         </ul>
       </div>
   </div>
@@ -466,7 +469,7 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
       listeExos: '',
       tabExos: [],
       nbExos: 0,
-      //Icone à sélectionner ou déselectionner si on veut voir ou non un exercice, en fonction du résultat, les exercices seront placés dans afficheEx
+      //Icone à sélectionner ou déselectionner si on veut voir ou non un exercice, en fonction du résultat, les exercices seront placés dans afficheEx, mesExercices contiendra le texte brut de chaque exercice
       icone: 'visibility',
       afficheEx: [],
       numExo: '',
