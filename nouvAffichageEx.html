@@ -321,13 +321,10 @@ Of a set \(\mathcal{S}\) is a bijection \(\psi : \mathcal{S} \rightarrow \mathca
       </div>
 
       <!-- Affichage des exercices -->
-      <button v-if="showCorrection" @click="showCorrection = !showCorrection">Cacher correction</button>
-      <button v-if="!showCorrection" @click="showCorrection = !showCorrection">Voir correction</button>
       <div class="col s5" style="height : 800px; overflow: scroll; overflow: auto">
         <!-- Ajouter : style="height: 200px; overflow: scroll; overflow: auto" à la div du dessous pour réduire les exercices -->
           <div class="collection-item" v-for="item in afficheEx">
-          {{item.enonce}}  
-          {{item.correction}}
+          {{item}}  
           </br>
           </br>
           </div>
@@ -414,8 +411,11 @@ function charger(n){
   // on charge l'exo mais uniquement s'il n'est pas encore chargé :
   if(mesExercices[n]==undefined || mesExercices[n]==""){
     var URL="exercices/ex"+numExo+".txt";
+    console.log("on charge l'exercice"+n+", son adresse est "+URL);
     $.get(URL, function (response) {
         mesExercices[n] = response;
+        console.log("chargement de l'exercice "+n+" terminé");
+        console.log(mesExercices[n]);
     });
   }
 }
@@ -477,7 +477,6 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
       afficheEx: [],
       numExo: '',
       mesExercices: [],
-      showCorrection: 'true',
       //Pour cocher ou decohcer tous les exercices
       selection: 'check_box',
       texteSelection: 'Tout désélectionner',
@@ -575,7 +574,6 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
     affichage(){
       this.afficheEx = [];
       var numExo;
-      var objExo = new Object();
       for(var n in this.tabExos) {
         if(this.tabExos[n].visible == 'visibility'){
           //Le premier élément du tableau sera nul donc on n'en tient pas compte
@@ -583,12 +581,9 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
             numExo = this.tabExos[n].exercice;
             charger(numExo);
             this.mesExercices[numExo] = mesExercices[numExo];
-            var splitExo = this.mesExercices[numExo].split('\correction');
-            objExo.enonce = splitExo[0];
-            objExo.showCorrection = 'true';
-            objExo.texteCorrection = splitExo[1];
-            this.afficheEx.push(objExo);
-            console.log(afficheEx[numExo].enonce);
+            this.afficheEx.push(this.mesExercices[numExo]);
+            console.log(this.mesExercices[numExo]);
+            console.log(this.afficheEx[numExo]);
           }
         }
       }
@@ -603,12 +598,8 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
               numExo = this.tabExoPerso[n].exercice;
               charger(numExo);
               this.mesExercices[numExo] = mesExercices[numExo];
-              var splitExo = this.mesExercices[numExo].split('\correction');
-              objExo.enonce = splitExo[0];
-              objExo.showCorrection = 'true';
-              objExo.texteCorrection = splitExo[1];
-              this.afficheEx.push(objExo);
-              console.log(afficheEx[numExo].enonce);
+              this.afficheEx.push(this.mesExercices[numExo]);
+              console.log(this.mesExercices[numExo]);
             }
           }
         }
