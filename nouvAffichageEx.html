@@ -322,18 +322,12 @@ De plus, l'affichage des exercices ne disparaît pas lorsqu'on clique sur "reven
       </div>
 
       <!-- Affichage des exercices -->
-      <div class="col s5">
+      <div class="col s5" style="height : 800px; overflow: scroll; overflow: auto">
           <div class="collection-item" v-for="item in afficheEx">
           {{item}}  
           </br>
           </br>
           </div>
-        <!-- Pour réduire l'affichage des exercices à droite, trouver comment réduire par sélection
-        <ul class="collection with-header" style="height: 600px; width: 100%; overflow: scroll; overflow: auto">
-          <li class="collection-item" v-for="item in afficheEx" style="display: flex; height: auto">
-            <iframe :src = "item" scrolling="no" frameborder="0" style="height: auto; width: auto"></iframe>
-          </li>
-        </ul> -->
       </div>
 
       <!-- Affichage liste personnalisée -->
