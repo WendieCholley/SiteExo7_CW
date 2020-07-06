@@ -243,7 +243,7 @@ De plus, l'affichage des exercices ne disparaît pas lorsqu'on clique sur "reven
       </div>
     </nav>
   </div>
-ccOf a set \(\mathcal{S}\) is a bijection \(\psi : \mathcal{S} \rightarrow \mathcal{S}\).
+Of a set \(\mathcal{S}\) is a bijection \(\psi : \mathcal{S} \rightarrow \mathcal{S}\).
   <div class="row">
       <!-- use the modal component, pass in the prop -->
       <modal v-if="showModal" @close="showModal = false">
@@ -578,6 +578,7 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
         if(this.tabExos[n].visible == 'visibility'){
           //Le premier élément du tableau sera nul donc on n'en tient pas compte
           if(this.tabExos[n].exercice != ''){
+            numExo = this.tabExos[n].exercice;
             this.mesExercices[numExo] = mesExercices[numExo];
             this.afficheEx.push(this.mesExercices[numExo]);
             console.log(this.mesExercices[numExo]);
@@ -593,6 +594,7 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
         for(var n in this.tabExoPerso) {
           if(this.tabExoPerso[n].visible == 'visibility'){
             if(this.tabExoPerso[n].exercice != ''){
+              numExo = this.tabExoPerso[n].exercice;
               this.mesExercices[numExo] = mesExercices[numExo];
               this.afficheEx.push(this.mesExercices[numExo]);
               console.log(this.mesExercices[numExo]);
