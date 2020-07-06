@@ -409,13 +409,13 @@ function charger(n){
      numExo = 0 + numExo;
   }
   // on charge l'exo mais uniquement s'il n'est pas encore chargé :
-  if(mesExercices[n]==undefined || mesExercices[n]==""){
+  if(app.mesExercices[n]==undefined || app.mesExercices[n]==""){
     var URL="exercices/ex"+numExo+".txt";
     console.log("on charge l'exercice"+n+", son adresse est "+URL);
     $.get(URL, function (response) {
-        mesExercices[n] = response;
+        app.mesExercices[n] = response;
         console.log("chargement de l'exercice "+n+" terminé");
-        console.log(mesExercices[n]);
+        console.log(app.mesExercices[n]);
     });
   }
 }
