@@ -233,6 +233,7 @@ De plus, l'affichage des exercices ne disparaît pas lorsqu'on clique sur "reven
         <a href="#!" class="brand-logo center">Rechercher des exercices</a>
         <ul class="left">
           <li><span class="tooltipped" data-position="right" data-tooltip="Retour à la page d'accueil" data-backgroun-color="red"><a href="index2.html"><i class="material-icons">undo</i></a></span></li>
+          <li><span class="tooltipped" data-position="right" data-tooltip="Imprimer"><a href="#"><i class="material-icons">print</i></a></span></li>
           <li><span class="tooltipped" data-position="right" data-tooltip="Chercher un exercice"><i class="material-icons" onclick="var m = prompt('Entrez le numéro de l\'exercice'); app.listeExos = ''; app.listeExos += m; app.recupExos(); app.affichage()">search</i></span>
           </li>
         </ul>
@@ -408,13 +409,13 @@ function charger(n){
      numExo = 0 + numExo;
   }
   // on charge l'exo mais uniquement s'il n'est pas encore chargé :
-  if(app.mesExercices[n]==undefined || app.mesExercices[n]==""){
+  if(mesExercices[n]==undefined || mesExercices[n]==""){
     var URL="exercices/ex"+numExo+".txt";
     console.log("on charge l'exercice"+n+", son adresse est "+URL);
     $.get(URL, function (response) {
-        app.mesExercices[n] = response;
+        mesExercices[n] = response;
         console.log("chargement de l'exercice "+n+" terminé");
-        console.log(app.mesExercices[n]);
+        console.log(mesExercices[n]);
     });
   }
 }
@@ -578,6 +579,8 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
           //Le premier élément du tableau sera nul donc on n'en tient pas compte
           if(this.tabExos[n].exercice != ''){
             numExo = this.tabExos[n].exercice;
+            charger(numExo);
+            this.mesExercices[numExo] = mesExercices[numExo];
             this.afficheEx.push(this.mesExercices[numExo]);
             console.log(this.mesExercices[numExo]);
             console.log(this.afficheEx[numExo]);
@@ -593,6 +596,8 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
           if(this.tabExoPerso[n].visible == 'visibility'){
             if(this.tabExoPerso[n].exercice != ''){
               numExo = this.tabExoPerso[n].exercice;
+              charger(numExo);
+              this.mesExercices[numExo] = mesExercices[numExo];
               this.afficheEx.push(this.mesExercices[numExo]);
               console.log(this.mesExercices[numExo]);
             }
