@@ -587,9 +587,9 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
               this.mesExercices[numExo] = response;
               console.log("chargement de l'exercice "+numExo+" terminé");
               console.log(this.mesExercices[numExo]);
+              this.afficheEx.push(this.mesExercices[numExo]);
             });
-            this.afficheEx.push(this.mesExercices[numExo]);
-            console.log(this.mesExercices[numExo]);
+
           }
         }
       }
@@ -606,9 +606,8 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
                 this.mesExercices[numExo] = response;
                 console.log("chargement de l'exercice "+numExo+" terminé");
                 console.log(this.mesExercices[numExo]);
+                this.afficheEx.push(this.mesExercices[numExo]);
               });
-              this.afficheEx.push(this.mesExercices[numExo]);
-              console.log(this.mesExercices[numExo]);
             }
           }
         }
