@@ -535,7 +535,6 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
       var v = 0; //visible
       var nv = 0; //non visible
       for(var n in this.tabExos){
-        console.log(this.tabExos[n].exercice);
         if(this.tabExos[n].exercice != ''){
           if(this.tabExos[n].visible == 'visibility_off'){
             nv++;
@@ -573,7 +572,7 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
                 app.afficheEx.push(app.mesExercices[numExo]);
               });
             } else {
-              this.afficheEx.push(this.mesExercices[numExo]);
+              this.afficheEx.push(app.mesExercices[numExo]);
             }
           }
         }
