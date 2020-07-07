@@ -583,6 +583,9 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
           //Le premier élément du tableau sera nul donc on n'en tient pas compte
           if(this.tabExos[n].exercice != ''){
             numExo = this.tabExos[n].exercice;
+            while(numExo.length < 6){
+              numExo = '0' + numExo;
+            }
             var URL="exercices/ex"+numExo+".txt";
             if(this.mesExercices[numExo] == undefined || this.mesExercices[numExo] == ""){
                 $.get(URL, function (response) {
@@ -606,6 +609,9 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
           if(this.tabExoPerso[n].visible == 'visibility'){
             if(this.tabExoPerso[n].exercice != ''){
               numExo = this.tabExoPerso[n].exercice;
+              while(numExo.length < 6){
+                numExo = '0' + numExo;
+              }
               var URL="exercices/ex"+numExo+".txt";
               if(this.mesExercices[numExo] == undefined || this.mesExercices[numExo] == ""){
                 $.get(URL, function (response) {
