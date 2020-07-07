@@ -22,6 +22,10 @@
       cursor: pointer;
     }
 
+    li{
+      padding: 10px;
+    }
+
     p:hover {
       color: orange;
       cursor: pointer;
@@ -579,8 +583,11 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
           //Le premier élément du tableau sera nul donc on n'en tient pas compte
           if(this.tabExos[n].exercice != ''){
             numExo = this.tabExos[n].exercice;
-            charger(numExo);
-            this.mesExercices[numExo] = mesExercices[numExo];
+            $.get(URL, function (response) {
+              this.mesExercices[numExo] = response;
+              console.log("chargement de l'exercice "+numExo+" terminé");
+              console.log(this.mesExercices[numExo]);
+            });
             this.afficheEx.push(this.mesExercices[numExo]);
             console.log(this.mesExercices[numExo]);
           }
@@ -595,8 +602,11 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
           if(this.tabExoPerso[n].visible == 'visibility'){
             if(this.tabExoPerso[n].exercice != ''){
               numExo = this.tabExoPerso[n].exercice;
-              charger(numExo);
-              this.mesExercices[numExo] = mesExercices[numExo];
+              $.get(URL, function (response) {
+                this.mesExercices[numExo] = response;
+                console.log("chargement de l'exercice "+numExo+" terminé");
+                console.log(this.mesExercices[numExo]);
+              });
               this.afficheEx.push(this.mesExercices[numExo]);
               console.log(this.mesExercices[numExo]);
             }
@@ -661,7 +671,7 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
         }
       } 
       //Descendre l'exercice
-      else if(position == 'down' && position != this.tabExoPerso.length-1){
+      else if(position != this.tabExoPerso.length-1){
         var p = this.tabExoPerso.length-1;
         while(p-1 != position){
           tabInter.push(this.tabExoPerso[p]);
