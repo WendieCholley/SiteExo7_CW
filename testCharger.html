@@ -330,6 +330,7 @@ Of a set \(\mathcal{S}\) is a bijection \(\psi : \mathcal{S} \rightarrow \mathca
           <div class="collection-item" v-for="item in afficheEx">
           {{item}}  
           <br/>
+          <br/>
           </div>
       </div>
 
@@ -577,7 +578,7 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
         }
       }
       for(var n in this.tabExos){
-        if(this.tabExos[n].visible == 'visibility' && this.tabExos[n].visible != ''){
+        if(this.tabExos[n].visible == 'visibility' && this.tabExos[n].exercice != ''){
           this.afficheEx.push(this.mesExercices[this.tabExos[n].exercice]);
         }
       }
