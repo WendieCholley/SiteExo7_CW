@@ -568,7 +568,6 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
             console.log("avant get : " + this.numExo);
             if(this.mesExercices[this.numExo] == undefined || this.mesExercices[this.numExo] == ""){
               $.get(URL, function (reponse) {
-                console.log("URL : " + numFichier);
                 app.mesExercices[app.numExo] = reponse;
                 app.afficheEx.push(app.mesExercices[app.numExo]);
                 console.log(app.numExo);
