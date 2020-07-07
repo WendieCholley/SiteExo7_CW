@@ -564,18 +564,18 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
               numFichier = '0' + numFichier;
             }
             var URL="exercices/ex"+numFichier+".txt";
-            var numExo = this.tabExos[n].exercice;
-            console.log("avant get : " + numExo);
-            if(this.mesExercices[numExo] == undefined || this.mesExercices[numExo] == ""){
+            this.numExo = this.tabExos[n].exercice;
+            console.log("avant get : " + this.numExo);
+            if(this.mesExercices[this.numExo] == undefined || this.mesExercices[this.numExo] == ""){
               $.get(URL, function (reponse) {
                 console.log("URL : " + numFichier);
-                app.mesExercices[numExo] = reponse;
-                app.afficheEx.push(app.mesExercices[numExo]);
-                console.log(numExo);
+                app.mesExercices[app.numExo] = reponse;
+                app.afficheEx.push(app.mesExercices[app.numExo]);
+                console.log(app.numExo);
               });
             } else {
-              this.afficheEx.push(this.mesExercices[numExo]);
-              console.log("Déjà tableau : " + numExo);
+              this.afficheEx.push(this.mesExercices[this.numExo]);
+              console.log("Déjà tableau : " + this.numExo);
             }
           }
         }
