@@ -22,6 +22,10 @@
       cursor: pointer;
     }
 
+    li{
+      padding: 10px;
+    }
+
     p:hover {
       color: orange;
       cursor: pointer;
@@ -185,9 +189,11 @@
                         </div>
 
                         <div style="text-align:center;padding:20px">
-
+                          
                           <input class="btn red" type="submit" name="pdf"   value="Exporter en PDF">
                           <input class="btn red"  type="submit" name="tex"   value="Exporter en LaTeX">
+                          <button class="modal-default-button btn red" @click="$emit('close')">Fermer</button>
+
                         </div>
 
                         <h6>Lien pour accéder à cette page avec cette même liste pré-chargée:</h6>
@@ -203,9 +209,6 @@
 
               <div class="modal-footer">
                 <slot name="footer">
-                  <button class="modal-default-button btn red" @click="$emit('close')">
-                    Fermer
-                  </button>
                 </slot>
               </div>
             </div>
@@ -243,6 +246,7 @@ De plus, l'affichage des exercices ne disparaît pas lorsqu'on clique sur "reven
       </div>
     </nav>
   </div>
+cc
 Of a set \(\mathcal{S}\) is a bijection \(\psi : \mathcal{S} \rightarrow \mathcal{S}\).
   <div class="row">
       <!-- use the modal component, pass in the prop -->
@@ -325,8 +329,7 @@ Of a set \(\mathcal{S}\) is a bijection \(\psi : \mathcal{S} \rightarrow \mathca
         <!-- Ajouter : style="height: 200px; overflow: scroll; overflow: auto" à la div du dessous pour réduire les exercices -->
           <div class="collection-item" v-for="item in afficheEx">
           {{item}}  
-          </br>
-          </br>
+          <br/>
           </div>
       </div>
 
@@ -399,27 +402,6 @@ Of a set \(\mathcal{S}\) is a bijection \(\psi : \mathcal{S} \rightarrow \mathca
 </footer>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script type="text/javascript">
-
-var mesExercices = new Array();
-
-function charger(n){
-  var numExo = n;
-  while(numExo.length < 6){
-     numExo = 0 + numExo;
-  }
-  // on charge l'exo mais uniquement s'il n'est pas encore chargé :
-  if(mesExercices[n]==undefined || mesExercices[n]==""){
-    var URL="exercices/ex"+numExo+".txt";
-    console.log("on charge l'exercice"+n+", son adresse est "+URL);
-    $.get(URL, function (response) {
-        mesExercices[n] = response;
-        console.log("chargement de l'exercice "+n+" terminé");
-        console.log(mesExercices[n]);
-    });
-  }
-}
-</script>
 
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({
@@ -574,15 +556,25 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
     affichage(){
       this.afficheEx = [];
       var numExo;
+      var numFichier;
       for(var n in this.tabExos) {
         if(this.tabExos[n].visible == 'visibility'){
           //Le premier élément du tableau sera nul donc on n'en tient pas compte
           if(this.tabExos[n].exercice != ''){
+            numFichier = this.tabExos[n].exercice;
             numExo = this.tabExos[n].exercice;
-            charger(numExo);
-            this.mesExercices[numExo] = mesExercices[numExo];
-            this.afficheEx.push(this.mesExercices[numExo]);
-            console.log(this.mesExercices[numExo]);
+            while(numFichier.length < 6){
+              numFichier = '0' + numFichier;
+            }
+            var URL="exercices/ex"+numFichier+".txt";
+            if(this.mesExercices[numExo] == undefined || this.mesExercices[numExo] == ""){
+              $.get(URL, function (response) {
+                app.mesExercices[numExo] = response;
+                app.afficheEx.push(app.mesExercices[numExo]);
+              });
+            } else {
+              this.afficheEx.push(this.mesExercices[numExo]);
+            }
           }
         }
       }
@@ -590,15 +582,25 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
     affichagePerso(){
       this.afficheEx = [];
       var numExo;
+      var numFichier;
       if(this.persoAffichee){
         for(var n in this.tabExoPerso) {
           if(this.tabExoPerso[n].visible == 'visibility'){
             if(this.tabExoPerso[n].exercice != ''){
               numExo = this.tabExoPerso[n].exercice;
-              charger(numExo);
-              this.mesExercices[numExo] = mesExercices[numExo];
-              this.afficheEx.push(this.mesExercices[numExo]);
-              console.log(this.mesExercices[numExo]);
+              numFichier = this.tabExoPerso[n].exercice;
+              while(numFichier.length < 6){
+                numFichier = '0' + numFichier;
+              }
+              var URL="exercices/ex"+numFichier+".txt";
+              if(this.mesExercices[numExo] == undefined || this.mesExercices[numExo] == ""){
+                $.get(URL, function (response) {
+                  app.mesExercices[numExo] = response;
+                  app.afficheEx.push(app.mesExercices[numExo]);
+                });
+              } else {
+                this.afficheEx.push(this.mesExercices[numExo]);
+              }
             }
           }
         }
@@ -661,7 +663,7 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
         }
       } 
       //Descendre l'exercice
-      else if(position == 'down' && position != this.tabExoPerso.length-1){
+      else if(position != this.tabExoPerso.length-1){
         var p = this.tabExoPerso.length-1;
         while(p-1 != position){
           tabInter.push(this.tabExoPerso[p]);
