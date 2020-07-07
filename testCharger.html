@@ -247,6 +247,7 @@ De plus, l'affichage des exercices ne disparaît pas lorsqu'on clique sur "reven
       </div>
     </nav>
   </div>
+cc
 Of a set \(\mathcal{S}\) is a bijection \(\psi : \mathcal{S} \rightarrow \mathcal{S}\).
   <div class="row">
       <!-- use the modal component, pass in the prop -->
@@ -590,12 +591,12 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
             }
             var URL="exercices/ex"+numFichier+".txt";
             if(this.mesExercices[numExo] == undefined || this.mesExercices[numExo] == ""){
-                $.get(URL, function (response) {
-                this.mesExercices[numExo] = response;
+              $.get(URL, function (response) {
+                app.mesExercices[numExo] = response;
                 console.log("chargement de l'exercice "+numExo+" terminé");
-                console.log(this.mesExercices[numExo]);
-                this.afficheEx.push(this.mesExercices[numExo]);
-            });
+                console.log(app.mesExercices[numExo]);
+                app.afficheEx.push(app.mesExercices[numExo]);
+              });
             } else {
               this.afficheEx.push(this.mesExercices[numExo]);
             }
@@ -619,10 +620,10 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
               var URL="exercices/ex"+numFichier+".txt";
               if(this.mesExercices[numExo] == undefined || this.mesExercices[numExo] == ""){
                 $.get(URL, function (response) {
-                  this.mesExercices[numExo] = response;
+                  app.mesExercices[numExo] = response;
                   console.log("chargement de l'exercice "+numExo+" terminé");
-                  console.log(this.mesExercices[numExo]);
-                  this.afficheEx.push(this.mesExercices[numExo]);
+                  console.log(app.mesExercices[numExo]);
+                  app.afficheEx.push(app.mesExercices[numExo]);
                 });
               } else {
                 this.afficheEx.push(this.mesExercices[numExo]);
