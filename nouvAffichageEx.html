@@ -570,9 +570,11 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
               $.get(URL, function (response) {
                 app.mesExercices[numExo] = response;
                 app.afficheEx.push(app.mesExercices[numExo]);
+                console.log(numExo);
               });
             } else {
-              this.afficheEx.push(app.mesExercices[numExo]);
+              this.afficheEx.push(this.mesExercices[numExo]);
+              console.log(numExo);
             }
           }
         }
