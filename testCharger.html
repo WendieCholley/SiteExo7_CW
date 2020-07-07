@@ -536,7 +536,6 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
       var v = 0; //visible
       var nv = 0; //non visible
       for(var n in this.tabExos){
-        console.log(this.tabExos[n].exercice);
         if(this.tabExos[n].exercice != ''){
           if(this.tabExos[n].visible == 'visibility_off'){
             nv++;
@@ -556,7 +555,6 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
     //Va faire une boucle sur tabExos pour récupérer la liste des exos sélectionnés, méthode doit être appelée à chaque clic
     affichage(){
       this.afficheEx = [];
-      var tabInter = [];
       var numExo;
       var numFichier;
       for(var n in this.tabExos) {
@@ -564,11 +562,11 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
           //Le premier élément du tableau sera nul donc on n'en tient pas compte
           if(this.tabExos[n].exercice != ''){
             numFichier = this.tabExos[n].exercice;
-            numExo = this.tabExos[n].exercice;
             while(numFichier.length < 6){
               numFichier = '0' + numFichier;
             }
             var URL="exercices/ex"+numFichier+".txt";
+            numExo = this.tabExos[n].exercice;
             if(this.mesExercices[numExo] == undefined || this.mesExercices[numExo] == ""){
               $.get(URL, function (response) {
                 app.mesExercices[numExo] = response;
@@ -591,12 +589,12 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
         for(var n in this.tabExoPerso) {
           if(this.tabExoPerso[n].visible == 'visibility'){
             if(this.tabExoPerso[n].exercice != ''){
-              numExo = this.tabExoPerso[n].exercice;
               numFichier = this.tabExoPerso[n].exercice;
               while(numFichier.length < 6){
                 numFichier = '0' + numFichier;
               }
               var URL="exercices/ex"+numFichier+".txt";
+              numExo = this.tabExoPerso[n].exercice;
               if(this.mesExercices[numExo] == undefined || this.mesExercices[numExo] == ""){
                 $.get(URL, function (response) {
                   app.mesExercices[numExo] = response;
