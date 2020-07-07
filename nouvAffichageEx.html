@@ -330,6 +330,7 @@ Of a set \(\mathcal{S}\) is a bijection \(\psi : \mathcal{S} \rightarrow \mathca
           <div class="collection-item" v-for="item in afficheEx">
           {{item}}  
           <br/>
+          <br/>
           </div>
       </div>
 
@@ -554,18 +555,16 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
     //Va faire une boucle sur tabExos pour récupérer la liste des exos sélectionnés, méthode doit être appelée à chaque clic
     affichage(){
       this.afficheEx = [];
-      var numExo;
-      var numFichier;
       for(var n in this.tabExos) {
         if(this.tabExos[n].visible == 'visibility'){
           //Le premier élément du tableau sera nul donc on n'en tient pas compte
           if(this.tabExos[n].exercice != ''){
-            numFichier = this.tabExos[n].exercice;
-            numExo = this.tabExos[n].exercice;
+            var numFichier = this.tabExos[n].exercice;
             while(numFichier.length < 6){
               numFichier = '0' + numFichier;
             }
             var URL="exercices/ex"+numFichier+".txt";
+            var numExo = this.tabExos[n].exercice;
             if(this.mesExercices[numExo] == undefined || this.mesExercices[numExo] == ""){
               $.get(URL, function (response) {
                 app.mesExercices[numExo] = response;
