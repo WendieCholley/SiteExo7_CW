@@ -57,11 +57,14 @@
       background-color: rgba(0, 0, 0, 0.5);
       display: table;
       transition: opacity 0.3s ease;
+      z-index: 1;
     }
 
     .modal-wrapper {
       display: table-cell;
       vertical-align: middle;
+      position: relative;
+      z-index: 1;
     }
 
     .modal-container {
@@ -73,6 +76,8 @@
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
       transition: all 0.3s ease;
       font-family: Helvetica, Arial, sans-serif;
+      position: relative;
+      z-index: 4;
     }
 
     .modal-header h3 {
@@ -113,8 +118,6 @@
       }
   </style>
 
-  <modal-template v-for="item in tabExoPerso" :exo="item.exercice" :visible="item.visible">
-  </modal-template>
     <!-- template for the modal component -->
     <script type="text/x-template" id="modal-template">
       <transition name="modal">
@@ -126,7 +129,6 @@
 
               <div class="modal-header">
                 <slot name="header">
-
                 </slot>
               </div>
 
@@ -151,8 +153,7 @@
                         <hr class="hrule">
                         <br/><br/>
                         <h6>Exercices à inclure dans la feuille :</h6>
-                        <textarea name="MesExos" id="maListe" rows="5" cols="100" style="width=100%;height:3em;resize:none;" onkeyup="maj()">
-                        </textarea>
+                        <textarea name="MesExos" id="maListe" rows="5" cols="100" value="Bonjour" style="width=100%;height:3em;resize:none;" onkeyup="maj()">{{liste}}</textarea>
                         <!-- $theliste est la liste qui peux provenir d'une selection en ligne -->
                         <br>
                         <i> Vous pouvez saisir directement les numéros des exercices.
@@ -163,7 +164,7 @@
  
 
                           <h6>Parties des exercices à inclure (si disponible) :</h6>
-                          <!-- J'ai modifié lignes 6913 et 6914 pour mettre en rouge les coches -->
+                          <!-- Ont été modifiées les lignes 6913 et 6914 pour mettre en rouge les coches -->
                           <label >
                             <input type="checkbox" name="Pos[]" value="e1" checked="checked" style="border-color: red;">
                             <span>Énoncés</span>
@@ -188,20 +189,19 @@
                           </label>
                         </div>
 
-                        <div style="text-align:center;padding:20px">
+                        <div class="col s12" style="text-align:center;padding:20px">
                           
-                          <input class="btn red" type="submit" name="pdf"   value="Exporter en PDF">
-                          <input class="btn red"  type="submit" name="tex"   value="Exporter en LaTeX">
-                          <button class="modal-default-button btn red" @click="$emit('close')">Fermer</button>
-
-                        </div>
-
-                        <h6>Lien pour accéder à cette page avec cette même liste pré-chargée:</h6>
-
-                        <input id="permalien" type="text" value="" style="width:100%">
-                        <input type="button" class="btn red" onClick="copier()" value="Copier l'URL dans le presse-papier" style="width:auto">
-
+                          <div class="col s6">
+                            <input class="btn red" type="submit" name="pdf"   value="Exporter en PDF">
+                          </div>
+                          <div class="col s6">
+                            <input class="btn red"  type="submit" name="tex"   value="Exporter en LaTeX">
+                          </div>
                       </form>
+                      <p class="center-align">
+                        <button class="btn red" @click="$emit('close')">Fermer</button>
+                      </p>
+                      </div>
                     </div>
                   </div>
                 </slot>
@@ -231,36 +231,34 @@ De plus, l'affichage des exercices ne disparaît pas lorsqu'on clique sur "reven
 <body onLoad="M.AutoInit();">
   <div class="app">
     <div class="row">
-    <nav>
-      <div class="nav-wrapper grey darken-4">
-        <a href="#!" class="brand-logo center">Rechercher des exercices</a>
-        <ul class="left">
-          <li><span class="tooltipped" data-position="right" data-tooltip="Retour à la page d'accueil" data-backgroun-color="red"><a href="index2.html"><i class="material-icons">undo</i></a></span></li>
-          <li><span class="tooltipped" data-position="right" data-tooltip="Imprimer"><a href="#"><i class="material-icons">print</i></a></span></li>
-          <li><span class="tooltipped" data-position="right" data-tooltip="Chercher un exercice"><i class="material-icons" onclick="var m = prompt('Entrez le numéro de l\'exercice'); app.listeExos = ''; app.listeExos += m; app.recupExos(); app.affichage()">search</i></span>
-          </li>
-        </ul>
-        <ul class="right">
-          <li><img src="images/LogoExo7-mini.png" style="width: 50%"></li>
-        </ul>
-      </div>
-    </nav>
-  </div>
+      <nav>
+        <div class="nav-wrapper grey darken-4">
+          <a href="#!" class="brand-logo center">Rechercher des exercices</a>
+          <ul class="left">
+            <li><span class="tooltipped" data-position="right" data-tooltip="Retour à la page d'accueil" data-backgroun-color="red"><a href="index2.html"><i class="material-icons">undo</i></a></span></li>
+            <li><span class="tooltipped" data-position="right" data-tooltip="Imprimer"><a href="#"><i class="material-icons">print</i></a></span></li>
+            <li><span class="tooltipped" data-position="right" data-tooltip="Chercher un exercice"><i class="material-icons" onclick="var m = prompt('Entrez le numéro de l\'exercice'); app.listeExos = ''; app.listeExos += m; app.recupExos(); app.affichage()">search</i></span></li>
+          </ul>
+          <ul class="right">
+            <li><img src="images/LogoExo7-mini.png" style="width: 50%"></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
 
 Of a set \(\mathcal{S}\) is a bijection \(\psi : \mathcal{S} \rightarrow \mathcal{S}\).
-  <div class="row">
+    <div class="row">
       <!-- use the modal component, pass in the prop -->
-      <modal v-if="showModal" @close="showModal = false">
+      <modal v-if="showModal" @close="showModal = false" :listePerso="listePerso" :liste="liste">
         <!--
       you can use custom content here to overwrite
       default content
     -->
-        <h3 slot="header">Aperçu de la feuille d'exercices</h3>
       </modal>
 
-<!-- Pour les bordures colorées, j'ai modifié les lignes 3162 et 3168 -->
-    <!-- Affichage des menus -->
-    <div class="col s3">
+      <!-- Pour les bordures colorées, j'ai modifié les lignes 3162 et 3168 -->
+      <!-- Affichage des menus -->
+      <div class="col s3">
 
         <!-- Affichage des modules -->
         <ul class="collection with-header" v-if = showModule>
@@ -280,11 +278,11 @@ Of a set \(\mathcal{S}\) is a bijection \(\psi : \mathcal{S} \rightarrow \mathca
         </ul>
 
         <ul class="collection with-header" v-if = showChap>
-            <li class="collection-item" 
-            v-for="item in listeChapitres" 
-            @click="listeSousChapitres = item.sousChapitres; exosChapitre(item.sousChapitres); recupExos(); chapitre = item.nom;
-            showSousChap = true; showChap = false;">
-              <div>{{ item.nom }}</div></li>
+          <li class="collection-item" 
+          v-for="item in listeChapitres" 
+          @click="listeSousChapitres = item.sousChapitres; exosChapitre(item.sousChapitres); recupExos(); chapitre = item.nom;
+          showSousChap = true; showChap = false;">
+            <div>{{ item.nom }}</div></li>
         </ul>
 
         <!-- Affichage des sous chapitres -->
@@ -296,14 +294,14 @@ Of a set \(\mathcal{S}\) is a bijection \(\psi : \mathcal{S} \rightarrow \mathca
         </ul>
 
         <ul class="collection with-header" v-if = showSousChap>
-              <li class="collection-item" 
-              v-for="item in listeSousChapitres" 
-              @click="exosSousChapitre(item); recupExos(); sousChap = item.nom;">
-                <div>{{ item.nom }}</div></li>
+          <li class="collection-item" 
+          v-for="item in listeSousChapitres" 
+          @click="exosSousChapitre(item); recupExos(); sousChap = item.nom;">
+            <div>{{ item.nom }}</div></li>
         </ul>
 
         <i>Nombre d'exercices {{ chapitre.substring(4,100) }} - {{ sousChap.substring(7, 100) }} : {{ nbExos }}</i>
-    </div>
+      </div>
 
       <!-- Liste des exercices -->
       <div class="col s2">
@@ -316,22 +314,22 @@ Of a set \(\mathcal{S}\) is a bijection \(\psi : \mathcal{S} \rightarrow \mathca
         <div class="col s12">
           <div class="col s6" v-show="tabExos.length != 0"><span class="tooltipped" data-position="bottom" data-tooltip="Tout (dé)sélectionner"><i class="material-icons" @click="changeSelection(); affichage()"> {{ selection }} </i></div>
           <div class="col s6"><span class="tooltipped" data-position="bottom" data-tooltip="Afficher"><i class="material-icons" @click="affichage()" v-show="tabExos.length != 0">visibility</i></span></div>
-</div>
+        </div>
         <ul class="collection with-header" style="height: 600px; overflow: scroll; overflow: auto">
           <li class="collection-item" v-for="item in tabExos" v-if="item.exercice != ''">
-          <i class="material-icons" @click="item.visible = changeIcone(item.visible); affichage(); verifSelection()">{{ item.visible }}</i> {{ item.exercice }} 
-          <i id="ajout" class="material-icons" @click="completeTabPerso(item.exercice)"> add </i></li>
+            <i class="material-icons" @click="item.visible = changeIcone(item.visible); affichage(); verifSelection()">{{ item.visible }}</i> {{ item.exercice }} 
+            <i id="ajout" class="material-icons" @click="completeTabPerso(item.exercice)"> add </i></li>
         </ul>
       </div>
 
       <!-- Affichage des exercices -->
       <div class="col s5" style="height : 800px; overflow: scroll; overflow: auto">
         <!-- Ajouter : style="height: 200px; overflow: scroll; overflow: auto" à la div du dessous pour réduire les exercices -->
-          <div class="collection-item" v-for="item in afficheEx">
+        <div class="collection-item" v-for="item in afficheEx">
           {{item}}  
           <br/>
           <br/>
-          </div>
+        </div>
       </div>
 
       <!-- Affichage liste personnalisée -->
@@ -345,7 +343,7 @@ Of a set \(\mathcal{S}\) is a bijection \(\psi : \mathcal{S} \rightarrow \mathca
         
         <div class="col s3"><span class="tooltipped" data-position="bottom" data-tooltip="Réinitialiser"><i class="material-icons" @click="tabExoPerso = []; reorganisation = false">delete</i></span></div>
 
-        <div class="col s3"><span id="show-modal" class="tooltipped" data-position="bottom" data-tooltip="Exporter"><i class="material-icons" @click="showModal = true">open_in_new</i></span></div>
+        <div class="col s3"><span id="show-modal" class="tooltipped" data-position="bottom" data-tooltip="Exporter"><i class="material-icons" @click="showModal = true; completeListePerso()">open_in_new</i></span></div>
 
         <ul class="collection with-header" style="height: 600px; overflow: scroll; overflow: auto">
           <li class="collection-item" v-for="item in tabExoPerso" v-if="item != ' '">
@@ -357,10 +355,10 @@ Of a set \(\mathcal{S}\) is a bijection \(\psi : \mathcal{S} \rightarrow \mathca
           </li>
         </ul>
       </div>
+    </div>
   </div>
-</div>
 
-<footer class="page-footer docs-footer deep-orange darken-3" style="padding-top: 0">
+  <footer class="page-footer docs-footer deep-orange darken-3" style="padding-top: 0">
       <div class="container" style="padding-top: 0">
         <div class="row" >
           <div class="col s12">
@@ -400,24 +398,23 @@ Of a set \(\mathcal{S}\) is a bijection \(\psi : \mathcal{S} \rightarrow \mathca
           </div>
         </div>
       </div>
-</footer>
+  </footer>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-    extensions: ["tex2jax.js"],
-    jax: ["input/TeX", "output/HTML-CSS"],
-    tex2jax: {
-      inlineMath: [ ["\\(","\\)"] ],
-      displayMath: [ ["\\[","\\]"] ],
-      processEscapes: true
-    },
-    "HTML-CSS": { availableFonts: ["TeX"] }
-  });
-</script>
-<script type="text/javascript"
-src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      extensions: ["tex2jax.js"],
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [ ["\\(","\\)"] ],
+        displayMath: [ ["\\[","\\]"] ],
+        processEscapes: true
+      },
+      "HTML-CSS": { availableFonts: ["TeX"] }
+    });
+  </script>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
 
   <!-- VueJS -->
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -427,302 +424,309 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
   <script type="text/javascript" src="materialize/js/materialize.js"></script>
 
   <!-- JQuery -->
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js%22%3E"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js%22%3E"></script>
 
-<script>
-  // register modal component
-  Vue.component("modal", {
-    props: ['exo', 'visible'],
-    template: "#modal-template",
-  });
-  const app = new Vue({
-    el: ".app",
-    data: {
-      showModal : false,
-      //Tableau d'objets où vont être tous les modules, chapitres, sous chapitres et listes d'exercices
-      tabModules: [],
-      //Données pour l'affichage
-      showModule: true,
-      showChap: false,
-      showSousChap: false,
-      module: '',
-      chapitre: '',
-      sousChap: '',
-      //Listes qui stockent les chap et sousChap à afficher
-      listeChapitres: [],
-      listeSousChapitres: [],
-      //listeExos prend la chaine contenant tous les exercices, qui va être splitée et intégrée dans tabExos pour avoir les numéros d'exercice un par un
-      listeExos: '',
-      tabExos: [],
-      nbExos: 0,
-      //Icone à sélectionner ou déselectionner si on veut voir ou non un exercice, en fonction du résultat, les exercices seront placés dans afficheEx, mesExercices contiendra le texte brut de chaque exercice
-      icone: 'visibility',
-      afficheEx: [],
-      numExo: '',
-      mesExercices: [],
-      //Pour cocher ou decohcer tous les exercices
-      selection: 'check_box',
-      texteSelection: 'Tout désélectionner',
-      //Liste des exercices entrés par l'utilisateur
-      tabExoPerso: [],
-      exercicePerso: '',
-      persoAffichee: false,
-    },
-    methods: {
-      //Méthode qui regroupe les listes d'exercices de tous les sous-chapitres d'un chapitre sélectionné, le paramètre étant la liste des sous-chapitres
-      exosChapitre(liste){
+  <script>
+    // register modal component
+    Vue.component("modal", {
+      props: ['liste'],
+      template: "#modal-template",
+    });
+    const app = new Vue({
+      el: ".app",
+      data: {
+        showModal : false,
+        //Tableau d'objets où vont être tous les modules, chapitres, sous chapitres et listes d'exercices
+        tabModules: [],
+        //Données pour l'affichage
+        showModule: true,
+        showChap: false,
+        showSousChap: false,
+        module: '',
+        chapitre: '',
+        sousChap: '',
+        //Listes qui stockent les chap et sousChap à afficher
+        listeChapitres: [],
+        listeSousChapitres: [],
+        //listeExos prend la chaine contenant tous les exercices, qui va être splitée et intégrée dans tabExos pour avoir les numéros d'exercice un par un
+        listeExos: '',
+        tabExos: [],
+        nbExos: 0,
+        //Icone à sélectionner ou déselectionner si on veut voir ou non un exercice, en fonction du résultat, les exercices seront placés dans afficheEx, mesExercices contiendra le texte brut de chaque exercice
+        icone: 'visibility',
+        afficheEx: [],
+        numExo: '',
+        mesExercices: [],
+        //Pour cocher ou decohcer tous les exercices
+        selection: 'check_box',
+        texteSelection: 'Tout désélectionner',
+        //Liste des exercices entrés par l'utilisateur, listePerson sera affichée dans le modal
+        liste: '',
+        tabExoPerso: [],
+        exercicePerso: '',
+        persoAffichee: false,
+      },
+      methods: {
+        //Méthode qui regroupe les listes d'exercices de tous les sous-chapitres d'un chapitre sélectionné, le paramètre étant la liste des sous-chapitres
+        exosChapitre(liste){
+          this.selection = 'check_box';
+          this.texteSelection = 'Tout désélectionner'
+          this.listeExos = [];
+          for(var n in liste){
+            this.listeExos += " " + liste[n].exos;
+          }
+        },
+      //Méthode qui prend en paramètre le nom d'un sous-chapitre et récupère son attribut exos dans listeExos
+      exosSousChapitre(nom){
         this.selection = 'check_box';
         this.texteSelection = 'Tout désélectionner'
         this.listeExos = [];
-        for(var n in liste){
-          this.listeExos += " " + liste[n].exos;
+        this.listeExos += nom.exos;
+      },
+      //Méthode qui insère un par un les exercices de listeExos dans un tableau pour pouvoir les afficher
+      recupExos(){
+        this.tabExos = [];
+        //Place tous les exercices dans un tableau pour trouver leur fichier .txt
+        var tabInter = this.listeExos.split(' ');
+        //Compte des exercices, juste pour l'affichage
+        //Pour les exos des chapitres, il y a un espace en premier caractère du tableau, on ne le compte donc  pas
+        if (tabInter[0] == ''){
+          this.nbExos = -1;
+        } else {
+          this.nbExos = 0;
+        }
+        for (var n in tabInter){
+          //On attribue l'icone visibility à chaque exercice avec l'attribut visible.
+          var objExos = new Object();
+          objExos.exercice = tabInter[n];
+          objExos.visible = this.icone;
+          objExos.ajouter = 'add';
+          this.tabExos.push(objExos);
+          this.nbExos += 1;
         }
       },
-    //Méthode qui prend en paramètre le nom d'un sous-chapitre et récupère son attribut exos dans listeExos
-    exosSousChapitre(nom){
-      this.selection = 'check_box';
-      this.texteSelection = 'Tout désélectionner'
-      this.listeExos = [];
-      this.listeExos += nom.exos;
-    },
-    //Méthode qui insère un par un les exercices de listeExos dans un tableau pour pouvoir les afficher
-    recupExos(){
-      this.tabExos = [];
-      //Place tous les exercices dans un tableau pour trouver leur fichier .txt
-      var tabInter = this.listeExos.split(' ');
-      //Compte des exercices, juste pour l'affichage
-      //Pour les exos des chapitres, il y a un espace en premier caractère du tableau, on ne le compte donc  pas
-      if (tabInter[0] == ''){
-        this.nbExos = -1;
-      } else {
-        this.nbExos = 0;
-      }
-      for (var n in tabInter){
-        //On attribue l'icone visibility à chaque exercice avec l'attribut visible.
-        var objExos = new Object();
-        objExos.exercice = tabInter[n];
-        objExos.visible = this.icone;
-        objExos.ajouter = 'add';
-        this.tabExos.push(objExos);
-        this.nbExos += 1;
-      }
-    },
-    //Méthode qui change l'icone de visibilité d'un exercice à chaque clique
-    changeIcone(icone){
-      if(icone == 'visibility'){
-        return 'visibility_off';
-      } else {
-        return 'visibility';
-      }
-    },
-    //Méthode qui change l'icone "tout sélectionner" ainsi que le texte correspondant
-    changeSelection(){
-      if(this.selection == 'check_box_outline_blank'){
-        this.selection = 'check_box';
-        this.texteSelection = 'Tout déselectionner';
-        for(var n in this.tabExos){
-          this.tabExos[n].visible = 'visibility';
+      //Méthode qui change l'icone de visibilité d'un exercice à chaque clique
+      changeIcone(icone){
+        if(icone == 'visibility'){
+          return 'visibility_off';
+        } else {
+          return 'visibility';
         }
-      } else {
-        this.selection = 'check_box_outline_blank';
-        this.texteSelection = 'Tout sélectionner';
-        for(var n in this.tabExos){
-          this.tabExos[n].visible = 'visibility_off';
-        }
-      }
-    },
-    //Si l'utilisateur déselectionne ou sélectionne tout à la main, la case Tout sélectionner doit changer
-    verifSelection(){
-      var v = 0; //visible
-      var nv = 0; //non visible
-      for(var n in this.tabExos){
-        if(this.tabExos[n].exercice != ''){
-          if(this.tabExos[n].visible == 'visibility_off'){
-            nv++;
-          } else {
-            v++;
+      },
+      //Méthode qui change l'icone "tout sélectionner" ainsi que le texte correspondant
+      changeSelection(){
+        if(this.selection == 'check_box_outline_blank'){
+          this.selection = 'check_box';
+          this.texteSelection = 'Tout déselectionner';
+          for(var n in this.tabExos){
+            this.tabExos[n].visible = 'visibility';
+          }
+        } else {
+          this.selection = 'check_box_outline_blank';
+          this.texteSelection = 'Tout sélectionner';
+          for(var n in this.tabExos){
+            this.tabExos[n].visible = 'visibility_off';
           }
         }
-      }
-      if(nv == this.nbExos && this.selection == 'check_box'){
-        this.selection = 'check_box_outline_blank';
-        this.texteSelection = 'Tout sélectionner';
-      } else if (v == this.nbExos && this.selection == 'check_box_outline_blank'){
-        this.selection = 'check_box';
-        this.texteSelection = 'Tout désélectionner';
-      }
-    },
-    //Va faire une boucle sur tabExos pour récupérer la liste des exos sélectionnés, méthode doit être appelée à chaque clic
-    affichage(){
-      this.afficheEx = [];
-      for(var n in this.tabExos) {
-        if(this.tabExos[n].visible == 'visibility'){
-          //Le premier élément du tableau sera nul donc on n'en tient pas compte
+      },
+      //Si l'utilisateur déselectionne ou sélectionne tout à la main, la case Tout sélectionner doit changer
+      verifSelection(){
+        var v = 0; //visible
+        var nv = 0; //non visible
+        for(var n in this.tabExos){
           if(this.tabExos[n].exercice != ''){
-            var numFichier = this.tabExos[n].exercice;
-            while(numFichier.length < 6){
-              numFichier = '0' + numFichier;
-            }
-            var URL="exercices/ex"+numFichier+".txt";
-            var numExo = this.tabExos[n].exercice;
-            console.log("avant get : " + this.numExo);
-            if(this.mesExercices[this.numExo] == undefined || this.mesExercices[numExo] == ""){
-              $.get(URL, function (reponse) {
-                app.mesExercices[numExo] = reponse;
-                app.afficheEx.push(app.mesExercices[numExo]);
-                console.log(numExo);
-                console.log(URL);
-              });
+            if(this.tabExos[n].visible == 'visibility_off'){
+              nv++;
             } else {
-              this.afficheEx.push(this.mesExercices[this.numExo]);
-              console.log("Déjà tableau : " + this.numExo);
+              v++;
             }
           }
         }
-      }
-    },
-    affichagePerso(){
-      this.afficheEx = [];
-      var numExo;
-      var numFichier;
-      if(this.persoAffichee){
-        for(var n in this.tabExoPerso) {
-          if(this.tabExoPerso[n].visible == 'visibility'){
-            if(this.tabExoPerso[n].exercice != ''){
-              numExo = this.tabExoPerso[n].exercice;
-              numFichier = this.tabExoPerso[n].exercice;
+        if(nv == this.nbExos && this.selection == 'check_box'){
+          this.selection = 'check_box_outline_blank';
+          this.texteSelection = 'Tout sélectionner';
+        } else if (v == this.nbExos && this.selection == 'check_box_outline_blank'){
+          this.selection = 'check_box';
+          this.texteSelection = 'Tout désélectionner';
+        }
+      },
+      //Va faire une boucle sur tabExos pour récupérer la liste des exos sélectionnés, méthode doit être appelée à chaque clic
+      affichage(){
+        this.afficheEx = [];
+        for(var n in this.tabExos) {
+          if(this.tabExos[n].visible == 'visibility'){
+            //Le premier élément du tableau sera nul donc on n'en tient pas compte
+            if(this.tabExos[n].exercice != ''){
+              var numFichier = this.tabExos[n].exercice;
               while(numFichier.length < 6){
                 numFichier = '0' + numFichier;
               }
               var URL="exercices/ex"+numFichier+".txt";
-              if(this.mesExercices[numExo] == undefined || this.mesExercices[numExo] == ""){
-                $.get(URL, function (response) {
-                  app.mesExercices[numExo] = response;
+              var numExo = this.tabExos[n].exercice;
+              console.log("avant get : " + this.numExo);
+              console.log("URL avant get : " + URL);
+              if(this.mesExercices[this.numExo] == undefined || this.mesExercices[numExo] == ""){
+                $.get(URL, function (reponse) {
+                  app.mesExercices[numExo] = reponse;
                   app.afficheEx.push(app.mesExercices[numExo]);
+                  console.log(numExo);
+                  console.log(URL);
                 });
               } else {
-                this.afficheEx.push(this.mesExercices[numExo]);
+                this.afficheEx.push(this.mesExercices[this.numExo]);
+                console.log("Déjà tableau : " + this.numExo);
               }
             }
           }
         }
-      }
-    },
-    completeTabPerso(numEx){
-      var c = 0;
-      var objEx = new Object();
-      for(var n in this.tabExoPerso){
-        if(this.tabExoPerso[n].exercice != numEx){
-          c++;
+      },
+      affichagePerso(){
+        this.afficheEx = [];
+        var numExo;
+        var numFichier;
+        if(this.persoAffichee){
+          for(var n in this.tabExoPerso) {
+            if(this.tabExoPerso[n].visible == 'visibility'){
+              if(this.tabExoPerso[n].exercice != ''){
+                numExo = this.tabExoPerso[n].exercice;
+                numFichier = this.tabExoPerso[n].exercice;
+                while(numFichier.length < 6){
+                  numFichier = '0' + numFichier;
+                }
+                var URL="exercices/ex"+numFichier+".txt";
+                if(this.mesExercices[numExo] == undefined || this.mesExercices[numExo] == ""){
+                  $.get(URL, function (response) {
+                    app.mesExercices[numExo] = response;
+                    app.afficheEx.push(app.mesExercices[numExo]);
+                  });
+                } else {
+                  this.afficheEx.push(this.mesExercices[numExo]);
+                }
+              }
+            }
+          }
         }
-      }
-      if(c == this.tabExoPerso.length && numEx != '' && numEx != 'null'){
-        objEx.exercice = numEx;
-        objEx.visible = this.icone;
-        objEx.reorganiser = this.reorganiser;
-        this.tabExoPerso.push(objEx);
-      }
-      //Pour l'ajout d'un exercice à la main :
-      this.exercice='';
-    },
-    suppListePerso(Ex){
-      var tabInter = [];
-      for(var n in this.tabExoPerso){
-        if(this.tabExoPerso[n] != Ex){
-          tabInter.push(this.tabExoPerso[n]);
+      },
+      completeTabPerso(numEx){
+        var c = 0;
+        var objEx = new Object();
+        for(var n in this.tabExoPerso){
+          if(this.tabExoPerso[n].exercice != numEx){
+            c++;
+          }
         }
-      }
-      this.tabExoPerso = [];
-      for(var n in tabInter){
-        this.tabExoPerso.push(tabInter[n]);
-      }
-    },
-    changeOrdre(direction, exo){
-      var tabInter = [];
-      var position;
-      for(var n in this.tabExoPerso){
-        if(this.tabExoPerso[n] == exo){
-          position = n;
+        if(c == this.tabExoPerso.length && numEx != '' && numEx != 'null'){
+          objEx.exercice = numEx;
+          objEx.visible = this.icone;
+          objEx.reorganiser = this.reorganiser;
+          this.tabExoPerso.push(objEx);
         }
-      }
-      //Monter l'exercice
-      if(direction == 'up' && position != 0){
-        var p = 0;
-        while(p+1 != position){
-          tabInter.push(this.tabExoPerso[p]);
-          p++;
-        }
-        tabInter.push(this.tabExoPerso[p+1]);
-        tabInter.push(this.tabExoPerso[p]);
-        p += 1;
-        while(p < this.tabExoPerso.length-1){
-          p++;
-          tabInter.push(this.tabExoPerso[p]);
+        //Pour l'ajout d'un exercice à la main :
+        this.exercice='';
+      },
+      suppListePerso(Ex){
+        var tabInter = [];
+        for(var n in this.tabExoPerso){
+          if(this.tabExoPerso[n] != Ex){
+            tabInter.push(this.tabExoPerso[n]);
+          }
         }
         this.tabExoPerso = [];
         for(var n in tabInter){
           this.tabExoPerso.push(tabInter[n]);
         }
-      } 
-      //Descendre l'exercice
-      else if(position != this.tabExoPerso.length-1){
-        var p = this.tabExoPerso.length-1;
-        while(p-1 != position){
-          tabInter.push(this.tabExoPerso[p]);
-          p--;
+      },
+      changeOrdre(direction, exo){
+        var tabInter = [];
+        var position;
+        for(var n in this.tabExoPerso){
+          if(this.tabExoPerso[n] == exo){
+            position = n;
+          }
         }
-        tabInter.push(this.tabExoPerso[p-1]);
-        tabInter.push(this.tabExoPerso[p]);
-        p -= 1;
-        while(p > 0){
-          p--;
+        //Monter l'exercice
+        if(direction == 'up' && position != 0){
+          var p = 0;
+          while(p+1 != position){
+            tabInter.push(this.tabExoPerso[p]);
+            p++;
+          }
+          tabInter.push(this.tabExoPerso[p+1]);
           tabInter.push(this.tabExoPerso[p]);
+          p += 1;
+          while(p < this.tabExoPerso.length-1){
+            p++;
+            tabInter.push(this.tabExoPerso[p]);
+          }
+          this.tabExoPerso = [];
+          for(var n in tabInter){
+            this.tabExoPerso.push(tabInter[n]);
+          }
+        } 
+        //Descendre l'exercice
+        else if(position != this.tabExoPerso.length-1){
+          var p = this.tabExoPerso.length-1;
+          while(p-1 != position){
+            tabInter.push(this.tabExoPerso[p]);
+            p--;
+          }
+          tabInter.push(this.tabExoPerso[p-1]);
+          tabInter.push(this.tabExoPerso[p]);
+          p -= 1;
+          while(p > 0){
+            p--;
+            tabInter.push(this.tabExoPerso[p]);
+          }
+          this.tabExoPerso = [];
+          var i = tabInter.length-1;
+          while(i >= 0){
+            this.tabExoPerso.push(tabInter[i]);
+            i--;
+          }
         }
-        this.tabExoPerso = [];
-        var i = tabInter.length-1;
-        while(i >= 0){
-          this.tabExoPerso.push(tabInter[i]);
-          i--;
+      },
+      completeListePerso(){
+        for(var n in this.tabExoPerso){
+          this.liste += this.tabExoPerso[n].exercice + ' ';
         }
       }
     },
-  },
-  created(){
-    //Insertion des anciens tabeaux du fichier tableaux.js
-    //Insertion des objets "modules" qui contiendront les chapitres et sous chapitres
-    for(var i = 0; i<tabModulesJS.length; i++){
-      var objModule = new Object();
-      objModule.nom = tabModulesJS[i];
-      objModule.chapitres = [];
-      this.tabModules.push(objModule);
-    }
+    created(){
+      //Insertion des anciens tabeaux du fichier tableaux.js
+      //Insertion des objets "modules" qui contiendront les chapitres et sous chapitres
+      for(var i = 0; i<tabModulesJS.length; i++){
+        var objModule = new Object();
+        objModule.nom = tabModulesJS[i];
+        objModule.chapitres = [];
+        this.tabModules.push(objModule);
+      }
 
-    //Insertion des objets "chapitres" qui contiendront les sous-chapitres et leurs exercices
-    var n = 0;
-    for (var i = 0; i < tabNumModuleJS.length; i++){
-      n = tabNumModuleJS[i];
-      var objChapitre = new Object();
-      objChapitre.nom = tabchdescJS[i];
-      objChapitre.sousChapitres = [];
-      this.tabModules[n].chapitres.push(objChapitre);
-    }
+      //Insertion des objets "chapitres" qui contiendront les sous-chapitres et leurs exercices
+      var n = 0;
+      for (var i = 0; i < tabNumModuleJS.length; i++){
+        n = tabNumModuleJS[i];
+        var objChapitre = new Object();
+        objChapitre.nom = tabchdescJS[i];
+        objChapitre.sousChapitres = [];
+        this.tabModules[n].chapitres.push(objChapitre);
+      }
 
-    //Insertion des objets "sous-chapitres" qui contiendront les exercices
-    for(var i = 0; i < this.tabModules.length; i++){
-      for (var j = 0; j < this.tabModules[i].chapitres.length; j++){
-        for (var k = 0; k < tabcodeJS.length; k++){
-          if (this.tabModules[i].chapitres[j].nom.substring(0,3) == tabcodeJS[k].substring(0,3)){
-            var objSousChapitre = new Object();
-            objSousChapitre.nom = tabdescJS[k];
-            objSousChapitre.exos = tabexosJS[k];
-            this.tabModules[i].chapitres[j].sousChapitres.push(objSousChapitre);
+      //Insertion des objets "sous-chapitres" qui contiendront les exercices
+      for(var i = 0; i < this.tabModules.length; i++){
+        for (var j = 0; j < this.tabModules[i].chapitres.length; j++){
+          for (var k = 0; k < tabcodeJS.length; k++){
+            if (this.tabModules[i].chapitres[j].nom.substring(0,3) == tabcodeJS[k].substring(0,3)){
+              var objSousChapitre = new Object();
+              objSousChapitre.nom = tabdescJS[k];
+              objSousChapitre.exos = tabexosJS[k];
+              this.tabModules[i].chapitres[j].sousChapitres.push(objSousChapitre);
+            }
           }
         }
       }
-    }
-  },
-})
-</script>
+    },
+  })
+  </script>
 
 </body>
 </html>
