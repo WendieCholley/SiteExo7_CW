@@ -228,7 +228,7 @@ De plus, l'affichage des exercices ne disparaît pas lorsqu'on clique sur "reven
           <a href="#!" class="brand-logo center">Rechercher des exercices</a>
           <ul class="left">
             <li><span class="tooltipped" data-position="right" data-tooltip="Retour à la page d'accueil" data-backgroun-color="red"><a href="index2.html"><i class="material-icons">undo</i></a></span></li>
-            <li><span class="tooltipped" data-position="right" data-tooltip="Chercher un exercice"><i class="material-icons" onclick="var m = prompt('Entrez le numéro de l\'exercice'); app.listeExos = ''; app.listeExos += m; app.recupExos(); app.affichage()">search</i></span></li>
+            <li><span class="tooltipped" data-position="right" data-tooltip="Chercher un exercice"><i class="material-icons" onclick="var m = prompt('Entrez le numéro de l\'exercice'); app.listeExos = ''; app.listeExos += m; app.recupExos(); app.affichage();">search</i></span></li>
           </ul>
           <ul class="right">
             <li><img src="images/LogoExo7-mini.png" style="width: 50%"></li>
@@ -327,7 +327,7 @@ De plus, l'affichage des exercices ne disparaît pas lorsqu'on clique sur "reven
         <ul class="collection with-header">
           <li class="collection-header"> <h5>Ma liste</h5></li>
         </ul>
-        <div class="col s3"><span class="tooltipped" data-position="bottom" data-tooltip="Ajouter"><i class="material-icons" onclick="var m = prompt('Entrez le numéro de l\'exercice'); if(m != null){app.completeTabPerso(m)}">add</i></span></div>
+        <div class="col s3"><span class="tooltipped" data-position="bottom" data-tooltip="Ajouter"><i class="material-icons" onclick="var m = prompt('Entrez le numéro de l\'exercice'); if(m != null){app.completeTabPerso(m). app.chargerExos(m,m)}">add</i></span></div>
         
         <div class="col s3"><span class="tooltipped" data-position="bottom" data-tooltip="Afficher"><i class="material-icons" @click="persoAffichee = true; affichagePerso()">visibility</i></span></div>
         
@@ -530,9 +530,6 @@ De plus, l'affichage des exercices ne disparaît pas lorsqu'on clique sur "reven
           if(this.tabExos[n].visible == 'visibility'){
             if(this.tabExos[n].exercice != ''){
               numFichier = this.tabExos[n].exercice;
-              while(numFichier.length < 6){
-                numFichier = '0' + numFichier;
-              }
               numExo = this.tabExos[n].exercice;
               if(this.mesExercices[numExo] == undefined || this.mesExercices[numExo] == ""){
                 this.chargerExos(numExo, numFichier); 
@@ -542,6 +539,9 @@ De plus, l'affichage des exercices ne disparaît pas lorsqu'on clique sur "reven
         }
       },
       chargerExos(numExo, numFichier){
+        while(numFichier.length < 6){
+          numFichier = '0' + numFichier;
+        }
         var URL="exercices/ex"+numFichier+".txt";
         $.get(URL, function (reponse) {
           app.mesExercices[numExo] = reponse;
@@ -557,30 +557,12 @@ De plus, l'affichage des exercices ne disparaît pas lorsqu'on clique sur "reven
           }
         }
       },
-      chargerExosPerso(numExo, numFichier){
-        var URL="exercices/ex"+numFichier+".txt";
-        $.get(URL, function (reponse) {
-          app.mesExercices[numExo] = reponse;
-          app.afficheEx.push(app.mesExercices[numExo]);
-        });
-      },
       affichagePerso(){
         this.afficheEx = [];
-        var numFichier;
-        var numExo;
         for (var n in this.tabExoPerso){
           if(this.tabExoPerso[n].visible == 'visibility'){
             if(this.tabExoPerso[n].exercice != ''){
-              numFichier = this.tabExoPerso[n].exercice;
-              while(numFichier.length < 6){
-                numFichier = '0' + numFichier;
-              }
-              numExo = this.tabExoPerso[n].exercice;
-              if(this.mesExercices[numExo] == undefined || this.mesExercices[numExo] == ""){
-                this.chargerExosPerso(numExo, numFichier); 
-              } else {
-                this.afficheEx.push(this.mesExercices[numExo]);   
-              }    
+              this.afficheEx.push(this.mesExercices[this.tabExoPerso[n].exercice]);        
             }
           }
         }
