@@ -303,12 +303,12 @@ De plus, l'affichage des exercices ne disparaît pas lorsqu'on clique sur "reven
           </li>
         </ul>
         <div class="col s12">
-          <div class="col s6" v-show="tabExos.length != 0"><span class="tooltipped" data-position="bottom" data-tooltip="Tout (dé)sélectionner"><i class="material-icons" @click="changeSelection(); affichage(); ordonnerAffichage();"> {{ selection }} </i></div>
-          <div class="col s6"><span class="tooltipped" data-position="bottom" data-tooltip="Afficher"><i class="material-icons" @click="affichage(); ordonnerAffichage();" v-show="tabExos.length != 0">visibility</i></span></div>
+          <div class="col s6" v-show="tabExos.length != 0"><span class="tooltipped" data-position="bottom" data-tooltip="Tout (dé)sélectionner"><i class="material-icons" @click="changeSelection(); affichage();"> {{ selection }} </i></div>
+          <div class="col s6"><span class="tooltipped" data-position="bottom" data-tooltip="Afficher"><i class="material-icons" @click="affichage();" v-show="tabExos.length != 0">visibility</i></span></div>
         </div>
         <ul class="collection with-header" style="height: 600px; overflow: scroll; overflow: auto">
           <li class="collection-item" v-for="item in tabExos" v-if="item.exercice != ''">
-            <i class="material-icons" @click="item.visible = changeIcone(item.visible); affichage(); ordonnerAffichage(); verifSelection()">{{ item.visible }}</i> {{ item.exercice }} 
+            <i class="material-icons" @click="item.visible = changeIcone(item.visible); affichage(); verifSelection()">{{ item.visible }}</i> {{ item.exercice }} 
             <i id="ajout" class="material-icons" @click="completeTabPerso(item.exercice)"> add </i></li>
         </ul>
       </div>
