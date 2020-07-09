@@ -332,7 +332,7 @@ De plus, l'affichage des exercices ne disparaît pas lorsqu'on clique sur "reven
         
         <div class="col s3"><span class="tooltipped" data-position="bottom" data-tooltip="Afficher"><i class="material-icons" @click="persoAffichee = true; affichagePerso()">visibility</i></span></div>
         
-        <div class="col s3"><span class="tooltipped" data-position="bottom" data-tooltip="Réinitialiser"><i class="material-icons" @click="tabExoPerso = []; reorganisation = false">delete</i></span></div>
+        <div class="col s3"><span class="tooltipped" data-position="bottom" data-tooltip="Réinitialiser"><i class="material-icons" @click="tabExoPerso = [];">delete</i></span></div>
 
         <div class="col s3"><span id="show-modal" class="tooltipped" data-position="bottom" data-tooltip="Exporter"><i class="material-icons" @click="showModal = true; completeListePerso()">open_in_new</i></span></div>
 
@@ -542,7 +542,6 @@ De plus, l'affichage des exercices ne disparaît pas lorsqu'on clique sur "reven
               while(numFichier.length < 6){
                 numFichier = '0' + numFichier;
               }
-              console.log("coucou");
               numExo = this.tabExos[n].exercice;
               if(this.mesExercices[numExo] == undefined || this.mesExercices[numExo] == ""){
                 this.chargerExos(numExo, numFichier); 
@@ -551,16 +550,6 @@ De plus, l'affichage des exercices ne disparaît pas lorsqu'on clique sur "reven
               }     
             }
           }
-        }
-      },
-      ordonnerAffichage(){
-        var tabInter = [];
-        var objEx = new Object();
-        for(var n in this.afficheEx){
-          objEx.numero = this.afficheEx[n].substring(10, 13);
-          objEx.exercice = this.afficheEx[n];
-          tabInter.push(objEx);
-          console.log(objEx.numero);
         }
       },
       affichagePerso(){
