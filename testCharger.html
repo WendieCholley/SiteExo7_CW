@@ -246,7 +246,7 @@ De plus, l'affichage des exercices ne disparaît pas lorsqu'on clique sur "reven
       </div>
     </nav>
   </div>
-
+cc
 Of a set \(\mathcal{S}\) is a bijection \(\psi : \mathcal{S} \rightarrow \mathcal{S}\).
   <div class="row">
       <!-- use the modal component, pass in the prop -->
@@ -554,6 +554,7 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
       },
       affichage2(){
         var numFichier;
+        var numExo;
         for (var n in this.tabExos){
           if(this.tabExos[n].visible == 'visibility'){
             if(this.tabExos[n].exercice != ''){
@@ -561,7 +562,11 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
               while(numFichier.length < 6){
                 numFichier = '0' + numFichier;
               }
-              this.affichage(this.tabExos[n].exercice, numFichier);            
+              numExo = this.tabExos[n].exercice;
+              if(this.mesExercices[numExo] == undefined || this.mesExercices[numExo] == ""){
+                this.affichage(numExo, numFichier); 
+              }
+              this.afficheEx.push(this.mesExercices[numExo]);         
             }
           }
         }
@@ -572,17 +577,12 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
         var URL="exercices/ex"+numFichier+".txt";
         console.log("avant get : " + numExo);
         console.log("URL avant get : " + URL);
-        if(this.mesExercices[numExo] == undefined || this.mesExercices[numExo] == ""){
-          $.get(URL, function (reponse) {
-            app.mesExercices[numExo] = reponse;
-            app.afficheEx.push(app.mesExercices[numExo]);
-            console.log(numExo);
-            console.log(URL);
-          });
-        } else {
-          this.afficheEx.push(this.mesExercices[numExo]);
-            console.log("Déjà tableau : " + numExo);
-        }
+        $.get(URL, function (reponse) {
+          app.mesExercices[numExo] = reponse;
+          app.afficheEx.push(app.mesExercices[numExo]);
+          console.log(numExo);
+          console.log(URL);
+        });
       },
       affichagePerso(){
         this.afficheEx = [];
