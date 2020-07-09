@@ -542,6 +542,7 @@ De plus, l'affichage des exercices ne disparaît pas lorsqu'on clique sur "reven
         }
       },
       chargerExos(numExo, numFichier){
+        this.afficheEx = [];
         var URL="exercices/ex"+numFichier+".txt";
         $.get(URL, function (reponse) {
           app.mesExercices[numExo] = reponse;
