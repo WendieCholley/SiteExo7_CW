@@ -239,6 +239,7 @@ De plus, l'affichage des exercices ne disparaît pas lorsqu'on clique sur "reven
     </div>
 
 Of a set \(\mathcal{S}\) is a bijection \(\psi : \mathcal{S} \rightarrow \mathcal{S}\).
+$2+2=4$
     <div class="row">
       <!-- use the modal component, pass in the prop -->
       <modal v-if="showModal" @close="showModal = false" :listePerso="listePerso" :liste="liste">
@@ -542,14 +543,10 @@ Of a set \(\mathcal{S}\) is a bijection \(\psi : \mathcal{S} \rightarrow \mathca
       },
       chargerExos(numExo, numFichier){
         var URL="exercices/ex"+numFichier+".txt";
-        console.log("avant get : " + numExo);
-        console.log("URL avant get : " + URL);
         $.get(URL, function (reponse) {
           app.mesExercices[numExo] = reponse;
           app.afficheEx.push(app.mesExercices[numExo]);
           MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
-          console.log(numExo);
-          console.log(URL);
         });
       },
       affichage(){
