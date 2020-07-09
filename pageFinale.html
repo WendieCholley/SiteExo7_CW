@@ -303,12 +303,12 @@ De plus, l'affichage des exercices ne disparaît pas lorsqu'on clique sur "reven
           </li>
         </ul>
         <div class="col s12">
-          <div class="col s6" v-show="tabExos.length != 0"><span class="tooltipped" data-position="bottom" data-tooltip="Tout (dé)sélectionner"><i class="material-icons" @click="changeSelection(); affichage(); ordonnerExercices()"> {{ selection }} </i></div>
-          <div class="col s6"><span class="tooltipped" data-position="bottom" data-tooltip="Afficher"><i class="material-icons" @click="affichage(); ordonnerExercices()" v-show="tabExos.length != 0">visibility</i></span></div>
+          <div class="col s6" v-show="tabExos.length != 0"><span class="tooltipped" data-position="bottom" data-tooltip="Tout (dé)sélectionner"><i class="material-icons" @click="changeSelection(); affichage()"> {{ selection }} </i></div>
+          <div class="col s6"><span class="tooltipped" data-position="bottom" data-tooltip="Afficher"><i class="material-icons" @click="affichage()" v-show="tabExos.length != 0">visibility</i></span></div>
         </div>
         <ul class="collection with-header" style="height: 600px; overflow: scroll; overflow: auto">
           <li class="collection-item" v-for="item in tabExos" v-if="item.exercice != ''">
-            <i class="material-icons" @click="item.visible = changeIcone(item.visible); affichage(); ordonnerExercices(); verifSelection()">{{ item.visible }}</i> {{ item.exercice }} 
+            <i class="material-icons" @click="item.visible = changeIcone(item.visible); affichage(); verifSelection()">{{ item.visible }}</i> {{ item.exercice }} 
             <i id="ajout" class="material-icons" @click="completeTabPerso(item.exercice)"> add </i></li>
         </ul>
       </div>
@@ -444,7 +444,6 @@ De plus, l'affichage des exercices ne disparaît pas lorsqu'on clique sur "reven
         //Icone à sélectionner ou déselectionner si on veut voir ou non un exercice, en fonction du résultat, les exercices seront placés dans afficheEx, mesExercices contiendra le texte brut de chaque exercice
         icone: 'visibility',
         afficheEx: [],
-        tabInter: [],
         numExo: '',
         mesExercices: [],
         //Pour cocher ou decohcer tous les exercices
@@ -544,11 +543,11 @@ De plus, l'affichage des exercices ne disparaît pas lorsqu'on clique sur "reven
         var URL="exercices/ex"+numFichier+".txt";
         $.get(URL, function (reponse) {
           app.mesExercices[numExo] = reponse;
-          app.tabInter.push(app.mesExercices[numExo]);
+          app.afficheEx.push(app.mesExercices[numExo]);
+          MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
         });
       },
       affichage(){
-        this.tabInter = [];
         this.afficheEx = [];
         var numFichier;
         var numExo;
@@ -563,24 +562,14 @@ De plus, l'affichage des exercices ne disparaît pas lorsqu'on clique sur "reven
               if(this.mesExercices[numExo] == undefined || this.mesExercices[numExo] == ""){
                 this.chargerExos(numExo, numFichier); 
               } else {
-                this.tabInter.push(this.mesExercices[numExo]);   
+                this.afficheEx.push(this.mesExercices[numExo]);
+                MathJax.Hub.Queue(["Typeset", MathJax.Hub]);    
               }     
             }
           }
         }
       },
-      ordonnerExercices(){
-        for (var n in this.tabExos){
-          if(this.tabExos[n].visible == 'visibility'){
-            if(this.tabExos[n].exercice != ''){
-              this.afficheEx.push(this.mesExercices[this.tabExos[n].exercice]);
-            }
-          }
-        }
-
-      },
       affichagePerso(){
-        this.tabInter = [];
         this.afficheEx = [];
         var numFichier;
         var numExo;
@@ -595,7 +584,8 @@ De plus, l'affichage des exercices ne disparaît pas lorsqu'on clique sur "reven
               if(this.mesExercices[numExo] == undefined || this.mesExercices[numExo] == ""){
                 this.chargerExos(numExo, numFichier); 
               } else {
-                this.tabInter.push(this.mesExercices[numExo]);   
+                this.afficheEx.push(this.mesExercices[numExo]); 
+                MathJax.Hub.Queue(["Typeset", MathJax.Hub]);    
               }    
             }
           }
