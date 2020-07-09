@@ -246,7 +246,7 @@ De plus, l'affichage des exercices ne disparaît pas lorsqu'on clique sur "reven
       </div>
     </nav>
   </div>
-cc
+
 Of a set \(\mathcal{S}\) is a bijection \(\psi : \mathcal{S} \rightarrow \mathcal{S}\).
   <div class="row">
       <!-- use the modal component, pass in the prop -->
@@ -553,6 +553,7 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
         }
       },
       affichage2(){
+        this.afficheEx = [];
         var numFichier;
         var numExo;
         for (var n in this.tabExos){
@@ -573,7 +574,6 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
       },
       //Va faire une boucle sur tabExos pour récupérer la liste des exos sélectionnés, méthode doit être appelée à chaque clic
       affichage(numExo, numFichier){
-        this.afficheEx = [];
         var URL="exercices/ex"+numFichier+".txt";
         console.log("avant get : " + numExo);
         console.log("URL avant get : " + URL);
