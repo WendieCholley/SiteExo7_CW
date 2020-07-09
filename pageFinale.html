@@ -551,6 +551,17 @@ De plus, l'affichage des exercices ne disparaît pas lorsqu'on clique sur "reven
             }
           }
         }
+        this.ordonnerAffichage();
+      },
+      ordonnerAffichage(){
+        var tabInter = [];
+        var objEx = new Object();
+        for(var n in this.afficheEx){
+          objEx.numero = this.afficheEx.substring(10, 13);
+          objEx.exercice = this.afficheEx[n];
+          tabInter.push(objEx);
+          console.log(objEx.numero);
+        }
       },
       affichagePerso(){
         this.afficheEx = [];
