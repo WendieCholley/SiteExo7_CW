@@ -22,10 +22,6 @@
       cursor: pointer;
     }
 
-    li{
-      padding: 10px;
-    }
-
     p:hover {
       color: orange;
       cursor: pointer;
@@ -69,7 +65,7 @@
 
     .modal-container {
       width: 700px;
-      margin: 15px auto;
+      margin: auto;
       padding: 20px 30px;
       background-color: #fff;
       border-radius: 2px;
@@ -88,10 +84,6 @@
 
     .modal-body {
       margin: 20px 0;
-    }
-
-    .modal-default-button {
-      float: right;
     }
 
       /*
@@ -550,59 +542,54 @@ Of a set \(\mathcal{S}\) is a bijection \(\psi : \mathcal{S} \rightarrow \mathca
           this.texteSelection = 'Tout désélectionner';
         }
       },
-      //Va faire une boucle sur tabExos pour récupérer la liste des exos sélectionnés, méthode doit être appelée à chaque clic
+      chargerExos(numExo, numFichier){
+        var URL="exercices/ex"+numFichier+".txt";
+        console.log("avant get : " + numExo);
+        console.log("URL avant get : " + URL);
+        $.get(URL, function (reponse) {
+          app.mesExercices[numExo] = reponse;
+          app.afficheEx.push(app.mesExercices[numExo]);
+          console.log(numExo);
+          console.log(URL);
+        });
+      },
       affichage(){
         this.afficheEx = [];
-        for(var n in this.tabExos) {
+        var numFichier;
+        var numExo;
+        for (var n in this.tabExos){
           if(this.tabExos[n].visible == 'visibility'){
-            //Le premier élément du tableau sera nul donc on n'en tient pas compte
             if(this.tabExos[n].exercice != ''){
-              var numFichier = this.tabExos[n].exercice;
+              numFichier = this.tabExos[n].exercice;
               while(numFichier.length < 6){
                 numFichier = '0' + numFichier;
               }
-              var URL="exercices/ex"+numFichier+".txt";
-              var numExo = this.tabExos[n].exercice;
-              console.log("avant get : " + this.numExo);
-              console.log("URL avant get : " + URL);
-              if(this.mesExercices[this.numExo] == undefined || this.mesExercices[numExo] == ""){
-                $.get(URL, function (reponse) {
-                  app.mesExercices[numExo] = reponse;
-                  app.afficheEx.push(app.mesExercices[numExo]);
-                  console.log(numExo);
-                  console.log(URL);
-                });
+              numExo = this.tabExos[n].exercice;
+              if(this.mesExercices[numExo] == undefined || this.mesExercices[numExo] == ""){
+                this.chargerExos(numExo, numFichier); 
               } else {
-                this.afficheEx.push(this.mesExercices[this.numExo]);
-                console.log("Déjà tableau : " + this.numExo);
-              }
+                this.afficheEx.push(this.mesExercices[numExo]);    
+              }     
             }
           }
         }
       },
       affichagePerso(){
         this.afficheEx = [];
-        var numExo;
         var numFichier;
-        if(this.persoAffichee){
-          for(var n in this.tabExoPerso) {
-            if(this.tabExoPerso[n].visible == 'visibility'){
-              if(this.tabExoPerso[n].exercice != ''){
-                numExo = this.tabExoPerso[n].exercice;
-                numFichier = this.tabExoPerso[n].exercice;
-                while(numFichier.length < 6){
-                  numFichier = '0' + numFichier;
-                }
-                var URL="exercices/ex"+numFichier+".txt";
-                if(this.mesExercices[numExo] == undefined || this.mesExercices[numExo] == ""){
-                  $.get(URL, function (response) {
-                    app.mesExercices[numExo] = response;
-                    app.afficheEx.push(app.mesExercices[numExo]);
-                  });
-                } else {
-                  this.afficheEx.push(this.mesExercices[numExo]);
-                }
+        var numExo;
+        for (var n in this.tabExoPerso){
+          if(this.tabExoPerso[n].visible == 'visibility'){
+            if(this.tabExoPerso[n].exercice != ''){
+              numFichier = this.tabExoPerso[n].exercice;
+              while(numFichier.length < 6){
+                numFichier = '0' + numFichier;
               }
+              numExo = this.tabExoPerso[n].exercice;
+              if(this.mesExercices[numExo] == undefined || this.mesExercices[numExo] == ""){
+                this.chargerExos(numExo, numFichier); 
+              }
+              this.afficheEx.push(this.mesExercices[numExo]);         
             }
           }
         }
