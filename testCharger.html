@@ -565,7 +565,7 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
               }
               var URL="exercices/ex"+numFichier+".txt";
               var numExo = this.tabExos[n].exercice;
-              console.log("avant get : " + this.numExo);
+              console.log("avant get : " + numExo);
               console.log("URL avant get : " + URL);
               if(this.mesExercices[numExo] == undefined || this.mesExercices[numExo] == ""){
                 $.get(URL, function (reponse) {
