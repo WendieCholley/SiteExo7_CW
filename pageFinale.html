@@ -546,6 +546,7 @@ De plus, l'affichage des exercices ne disparaît pas lorsqu'on clique sur "reven
         var URL="exercices/ex"+numFichier+".txt";
         $.get(URL, function (reponse) {
           app.mesExercices[numExo] = reponse;
+          app.afficheEx.push(response);
         });
       },
       affichage(){
