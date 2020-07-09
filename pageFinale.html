@@ -228,7 +228,7 @@ De plus, l'affichage des exercices ne disparaît pas lorsqu'on clique sur "reven
           <a href="#!" class="brand-logo center">Rechercher des exercices</a>
           <ul class="left">
             <li><span class="tooltipped" data-position="right" data-tooltip="Retour à la page d'accueil" data-backgroun-color="red"><a href="index2.html"><i class="material-icons">undo</i></a></span></li>
-            <li><span class="tooltipped" data-position="right" data-tooltip="Chercher un exercice"><i class="material-icons" onclick="var m = prompt('Entrez le numéro de l\'exercice'); app.listeExos = ''; app.listeExos += m; app.recupExos(); app.affichage();">search</i></span></li>
+            <li><span class="tooltipped" data-position="right" data-tooltip="Chercher un exercice"><i class="material-icons" onclick="var m = prompt('Entrez le numéro de l\'exercice'); app.listeExos = ''; app.listeExos += m; app.recupExos(); app.chargerExos(m,m); app.affichage();">search</i></span></li>
           </ul>
           <ul class="right">
             <li><img src="images/LogoExo7-mini.png" style="width: 50%"></li>
