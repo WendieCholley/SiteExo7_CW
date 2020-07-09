@@ -570,6 +570,7 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
               if(this.mesExercices[numExo] == undefined || this.mesExercices[numExo] == ""){
                 $.get(URL, function (reponse) {
                   var numExo = app.tabExos[n].exercice;
+                  console.log("n : " + n)
                   app.mesExercices[numExo] = reponse;
                   app.afficheEx.push(app.mesExercices[numExo]);
                   console.log(numExo);
