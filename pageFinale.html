@@ -545,9 +545,7 @@ De plus, l'affichage des exercices ne disparaît pas lorsqu'on clique sur "reven
         var URL="exercices/ex"+numFichier+".txt";
         $.get(URL, function (reponse) {
           app.mesExercices[numExo] = reponse;
-          app.afficheEx.push(app.mesExercices[numExo]);
         });
-        this.afficheEx = [];
       },
       affichage(){
         this.afficheEx = [];
@@ -558,6 +556,13 @@ De plus, l'affichage des exercices ne disparaît pas lorsqu'on clique sur "reven
             }
           }
         }
+      },
+      chargerExosPerso(numExo, numFichier){
+        var URL="exercices/ex"+numFichier+".txt";
+        $.get(URL, function (reponse) {
+          app.mesExercices[numExo] = reponse;
+          this.afficheEx.push(app.mesExercices[numExo]);
+        });
       },
       affichagePerso(){
         this.afficheEx = [];
@@ -572,7 +577,7 @@ De plus, l'affichage des exercices ne disparaît pas lorsqu'on clique sur "reven
               }
               numExo = this.tabExoPerso[n].exercice;
               if(this.mesExercices[numExo] == undefined || this.mesExercices[numExo] == ""){
-                this.chargerExos(numExo, numFichier); 
+                this.chargerExosPerso(numExo, numFichier); 
               } else {
                 this.afficheEx.push(this.mesExercices[numExo]);   
               }    
