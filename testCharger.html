@@ -567,17 +567,17 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
               var numExo = this.tabExos[n].exercice;
               console.log("avant get : " + numExo);
               console.log("URL avant get : " + URL);
-              if(this.mesExercices[numExo] == undefined || this.mesExercices[numExo] == ""){
+              //if(this.mesExercices[numExo] == undefined || this.mesExercices[numExo] == ""){
                 $.get(URL, function (reponse) {
                   app.mesExercices[numExo] = reponse;
                   app.afficheEx.push(app.mesExercices[numExo]);
                   console.log(numExo);
                   console.log(URL);
                 });
-              } else {
+              //} else {
                 this.afficheEx.push(this.mesExercices[numExo]);
                 console.log("Déjà tableau : " + numExo);
-              }
+              //}
             }
           }
         }
