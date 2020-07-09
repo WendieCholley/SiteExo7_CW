@@ -588,8 +588,9 @@ Of a set \(\mathcal{S}\) is a bijection \(\psi : \mathcal{S} \rightarrow \mathca
               numExo = this.tabExoPerso[n].exercice;
               if(this.mesExercices[numExo] == undefined || this.mesExercices[numExo] == ""){
                 this.chargerExos(numExo, numFichier); 
-              }
-              this.afficheEx.push(this.mesExercices[numExo]);         
+              } else {
+                this.afficheEx.push(this.mesExercices[numExo]);     
+              }    
             }
           }
         }
