@@ -7,6 +7,9 @@
   <meta name="Description" content="Exo7 propose aux étudiants des fiches d’exercices de mathématiques avec indications et corrections de niveau L1 Math Sup, L2 Math Spé, L3 Licence."/> 
   <meta name="Keywords" content="exercice, math, mathématique, licence, université, supérieur, prépa, cpge, sup, spé, correction, corrigé, algèbre, analyse, L1, L2, L3"/>
 
+  <!-- MathJax -->
+  <script type="text/javascript" async src="MathJax/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
   <!-- Materialize -->
   <link rel="stylesheet" href="materialize/css/materialize.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -416,8 +419,6 @@ Of a set \(\mathcal{S}\) is a bijection \(\psi : \mathcal{S} \rightarrow \mathca
     "HTML-CSS": { availableFonts: ["TeX"] }
   });
 </script>
-<script type="text/javascript"
-src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
 
   <!-- VueJS -->
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -598,8 +599,9 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
               numExo = this.tabExoPerso[n].exercice;
               if(this.mesExercices[numExo] == undefined || this.mesExercices[numExo] == ""){
                 this.chargerExos(numExo, numFichier); 
-              }
-              this.afficheEx.push(this.mesExercices[numExo]);         
+              } else {
+                this.afficheEx.push(this.mesExercices[numExo]);  
+              }       
             }
           }
         }
