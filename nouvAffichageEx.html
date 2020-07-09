@@ -457,15 +457,15 @@ Of a set \(\mathcal{S}\) is a bijection \(\psi : \mathcal{S} \rightarrow \mathca
         persoAffichee: false,
       },
       methods: {
-        //Méthode qui regroupe les listes d'exercices de tous les sous-chapitres d'un chapitre sélectionné, le paramètre étant la liste des sous-chapitres
-        exosChapitre(liste){
-          this.selection = 'check_box';
-          this.texteSelection = 'Tout désélectionner'
-          this.listeExos = [];
-          for(var n in liste){
-            this.listeExos += " " + liste[n].exos;
-          }
-        },
+      //Méthode qui regroupe les listes d'exercices de tous les sous-chapitres d'un chapitre sélectionné, le paramètre étant la liste des sous-chapitres
+      exosChapitre(liste){
+        this.selection = 'check_box';
+        this.texteSelection = 'Tout désélectionner'
+        this.listeExos = [];
+        for(var n in liste){
+          this.listeExos += " " + liste[n].exos;
+        }
+      },
       //Méthode qui prend en paramètre le nom d'un sous-chapitre et récupère son attribut exos dans listeExos
       exosSousChapitre(nom){
         this.selection = 'check_box';
@@ -547,6 +547,7 @@ Of a set \(\mathcal{S}\) is a bijection \(\psi : \mathcal{S} \rightarrow \mathca
         $.get(URL, function (reponse) {
           app.mesExercices[numExo] = reponse;
           app.afficheEx.push(app.mesExercices[numExo]);
+          MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
           console.log(numExo);
           console.log(URL);
         });
@@ -566,7 +567,8 @@ Of a set \(\mathcal{S}\) is a bijection \(\psi : \mathcal{S} \rightarrow \mathca
               if(this.mesExercices[numExo] == undefined || this.mesExercices[numExo] == ""){
                 this.chargerExos(numExo, numFichier); 
               } else {
-                this.afficheEx.push(this.mesExercices[numExo]);    
+                this.afficheEx.push(this.mesExercices[numExo]);
+                MathJax.Hub.Queue(["Typeset", MathJax.Hub]);    
               }     
             }
           }
@@ -587,7 +589,8 @@ Of a set \(\mathcal{S}\) is a bijection \(\psi : \mathcal{S} \rightarrow \mathca
               if(this.mesExercices[numExo] == undefined || this.mesExercices[numExo] == ""){
                 this.chargerExos(numExo, numFichier); 
               } else {
-                this.afficheEx.push(this.mesExercices[numExo]);     
+                this.afficheEx.push(this.mesExercices[numExo]); 
+                MathJax.Hub.Queue(["Typeset", MathJax.Hub]);    
               }    
             }
           }
