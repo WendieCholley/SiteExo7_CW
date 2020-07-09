@@ -246,7 +246,7 @@ De plus, l'affichage des exercices ne disparaît pas lorsqu'on clique sur "reven
       </div>
     </nav>
   </div>
-
+cc
 Of a set \(\mathcal{S}\) is a bijection \(\psi : \mathcal{S} \rightarrow \mathcal{S}\).
   <div class="row">
       <!-- use the modal component, pass in the prop -->
@@ -314,12 +314,12 @@ Of a set \(\mathcal{S}\) is a bijection \(\psi : \mathcal{S} \rightarrow \mathca
           </li>
         </ul>
         <div class="col s12">
-          <div class="col s6" v-show="tabExos.length != 0"><span class="tooltipped" data-position="bottom" data-tooltip="Tout (dé)sélectionner"><i class="material-icons" @click="changeSelection(); affichage2()"> {{ selection }} </i></div>
-          <div class="col s6"><span class="tooltipped" data-position="bottom" data-tooltip="Afficher"><i class="material-icons" @click="affichage2()" v-show="tabExos.length != 0">visibility</i></span></div>
+          <div class="col s6" v-show="tabExos.length != 0"><span class="tooltipped" data-position="bottom" data-tooltip="Tout (dé)sélectionner"><i class="material-icons" @click="changeSelection(); affichage()"> {{ selection }} </i></div>
+          <div class="col s6"><span class="tooltipped" data-position="bottom" data-tooltip="Afficher"><i class="material-icons" @click="affichage()" v-show="tabExos.length != 0">visibility</i></span></div>
 </div>
         <ul class="collection with-header" style="height: 600px; overflow: scroll; overflow: auto">
           <li class="collection-item" v-for="item in tabExos" v-if="item.exercice != ''">
-          <i class="material-icons" @click="item.visible = changeIcone(item.visible); affichage2(); verifSelection()">{{ item.visible }}</i> {{ item.exercice }} 
+          <i class="material-icons" @click="item.visible = changeIcone(item.visible); affichage(); verifSelection()">{{ item.visible }}</i> {{ item.exercice }} 
           <i id="ajout" class="material-icons" @click="completeTabPerso(item.exercice)"> add </i></li>
         </ul>
       </div>
@@ -328,7 +328,7 @@ Of a set \(\mathcal{S}\) is a bijection \(\psi : \mathcal{S} \rightarrow \mathca
       <div class="col s5" style="height : 800px; overflow: scroll; overflow: auto">
         <!-- Ajouter : style="height: 200px; overflow: scroll; overflow: auto" à la div du dessous pour réduire les exercices -->
           <div class="collection-item" v-for="item in afficheEx">
-          {{item}}  
+          {{item}}
           <br/>
           <br/>
           </div>
@@ -552,7 +552,17 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
           this.texteSelection = 'Tout désélectionner';
         }
       },
-      affichage2(){
+      chargerExos(numExo, numFichier){
+        var URL="exercices/ex"+numFichier+".txt";
+        console.log("avant get : " + numExo);
+        console.log("URL avant get : " + URL);
+        $.get(URL, function (reponse) {
+          app.mesExercices[numExo] = reponse;
+          console.log(numExo);
+          console.log(URL);
+        });
+      },
+      affichage(){
         this.afficheEx = [];
         var numFichier;
         var numExo;
@@ -565,48 +575,29 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
               }
               numExo = this.tabExos[n].exercice;
               if(this.mesExercices[numExo] == undefined || this.mesExercices[numExo] == ""){
-                this.affichage(numExo, numFichier); 
+                this.chargerExos(numExo, numFichier); 
               }
               this.afficheEx.push(this.mesExercices[numExo]);         
             }
           }
         }
       },
-      //Va faire une boucle sur tabExos pour récupérer la liste des exos sélectionnés, méthode doit être appelée à chaque clic
-      affichage(numExo, numFichier){
-        var URL="exercices/ex"+numFichier+".txt";
-        console.log("avant get : " + numExo);
-        console.log("URL avant get : " + URL);
-        $.get(URL, function (reponse) {
-          app.mesExercices[numExo] = reponse;
-          app.afficheEx.push(app.mesExercices[numExo]);
-          console.log(numExo);
-          console.log(URL);
-        });
-      },
       affichagePerso(){
         this.afficheEx = [];
-        var numExo;
         var numFichier;
-        if(this.persoAffichee){
-          for(var n in this.tabExoPerso) {
-            if(this.tabExoPerso[n].visible == 'visibility'){
-              if(this.tabExoPerso[n].exercice != ''){
-                numExo = this.tabExoPerso[n].exercice;
-                numFichier = this.tabExoPerso[n].exercice;
-                while(numFichier.length < 6){
-                  numFichier = '0' + numFichier;
-                }
-                var URL="exercices/ex"+numFichier+".txt";
-                if(this.mesExercices[numExo] == undefined || this.mesExercices[numExo] == ""){
-                  $.get(URL, function (response) {
-                    app.mesExercices[numExo] = response;
-                    app.afficheEx.push(app.mesExercices[numExo]);
-                  });
-                } else {
-                  this.afficheEx.push(this.mesExercices[numExo]);
-                }
+        var numExo;
+        for (var n in this.tabExoPerso){
+          if(this.tabExoPerso[n].visible == 'visibility'){
+            if(this.tabExoPerso[n].exercice != ''){
+              numFichier = this.tabExoPerso[n].exercice;
+              while(numFichier.length < 6){
+                numFichier = '0' + numFichier;
               }
+              numExo = this.tabExoPerso[n].exercice;
+              if(this.mesExercices[numExo] == undefined || this.mesExercices[numExo] == ""){
+                this.chargerExos(numExo, numFichier); 
+              }
+              this.afficheEx.push(this.mesExercices[numExo]);         
             }
           }
         }
