@@ -542,6 +542,7 @@ De plus, l'affichage des exercices ne disparaît pas lorsqu'on clique sur "reven
               while(numFichier.length < 6){
                 numFichier = '0' + numFichier;
               }
+              console.log("coucou");
               numExo = this.tabExos[n].exercice;
               if(this.mesExercices[numExo] == undefined || this.mesExercices[numExo] == ""){
                 this.chargerExos(numExo, numFichier); 
